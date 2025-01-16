@@ -6,13 +6,12 @@
 }
 
 body {
-  /* background-color: aqua; */
   width: 100vw;
-  background-image: url('../images/site/small_check.png'); /* Ruta de ejemplo */
-  background-size: cover; /* Ajusta la imagen para cubrir toda la pantalla */
-  background-repeat: no-repeat; /* Evita que la imagen se repita */
-  background-position: center; /* Centra la imagen */
-  background-attachment: fixed; /* Mantiene el fondo fijo al hacer scroll */
+  background-image: url('../images/site/small_check.png'); 
+  background-size: cover;
+  background-repeat: no-repeat; 
+  background-position: center; 
+  background-attachment: fixed;
   font-family: Arial, Helvetica, sans-serif;
 }
 #wrapper {
@@ -29,7 +28,7 @@ a {
 }
 .logo {
   display: flex;
-  /* background-color: beige; */
+
   justify-content: space-between;
   align-items:center;
 }
@@ -49,9 +48,9 @@ nav ul li a {
   color: white;
 }
 
-/* Estilo para la sección hero */
+
 .hero {
-  position: relative; /* Para que los elementos absolutos se posicionen dentro de esta sección */
+  position: relative; 
   text-align: center;
   padding: 20px;
   
@@ -59,94 +58,92 @@ nav ul li a {
 
 
 
-/* Imagen del vehículo */
+
 .hero img {
-  width: 100%; /* Que la imagen sea responsiva */
-  max-width: 600px; /* Tamaño máximo para pantallas grandes */
+  width: 100%;
+  max-width: 600px;
   height: auto;
   display: block;
-  margin: 0 auto; /* Centrar la imagen */
+  margin: 0 auto; 
   position: relative;
-  z-index: 1; /* Asegurar que quede por debajo del contenido absoluto */
+  z-index: 1; 
 }
 
-/* Contenedor de texto y botón */
+
 .hero article {
   position: absolute;
-  top: 50%; /* Centrar verticalmente en relación a la imagen */
-  left: 0; /* Colocar en el lado izquierdo con un margen */
-  transform: translateY(-50%); /* Ajustar verticalmente al centro */
-  background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente para contraste */
+  top: 50%; 
+  left: 0; 
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5); 
   padding: .5rem;
   border-radius: 10px;
   color: white;
-  z-index: 2; /* Por encima de la imagen */
-  text-align: left; /* Alinear texto a la izquierda */
+  z-index: 2;
+  text-align: left; 
 }
 
-/* Título del artículo */
 .hero article h3 {
   font-size: 1.5rem;
   margin-bottom: 10px;
 }
 
-/* Texto dentro del artículo */
+
 .hero article p {
   font-size: 1rem;
   margin-bottom: 10px;
 }
 
-/* Botón de acción */
 .hero article button {
   padding: 10px 20px;
   font-size: 1rem;
   color: white;
-  background-color: #004d56; /* Azul principal */
+  background-color: #004d56;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
 .hero article button:hover {
-  background-color: #0056b3; /* Azul más oscuro al pasar el ratón */
+  background-color: #0056b3; 
 }
 
-/* Estilo para el título fuera de la imagen */
+
 .hero h3 {
   font-size: 1.5rem;
   margin-top: 20px;
   color: white;
 }
 
-/* Contenedor para ambas secciones */
+
 .main-sections {
-  display: flex; /* Flexbox para alinear en fila */
-  justify-content: space-between; /* Espacio entre las secciones */
-  gap: 20px; /* Separación entre secciones */
-  flex-wrap: wrap; /* Permitir que se apilen en vistas más pequeñas */
+  display: flex;
+  justify-content: space-between; 
+  gap: 20px; 
+  flex-wrap: wrap; 
 }
 
-/* Estilo individual de cada sección */
+
 .reviews, .upgrades {
-  flex: 1; /* Ocupa espacio equitativo */
-  min-width: 300px; /* Evitar que se vuelvan demasiado pequeños */
+  flex: 1; 
+  min-width: 300px; 
 }
 .upgrade-list {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  justify-items: center; /* Centra horizontalmente los elementos dentro de las celdas */
-  gap: 20px; /* Espaciado entre las celdas */
+  justify-items: center; 
+  gap: 20px;
 }
 .upgrade-list a img {
-  display: block; /* Para que la imagen se expanda dentro del enlace */
+  display: block;
   justify-self: center;
   width: 100px;
   height: auto;
 }
 
-/* Media query para móviles */
+
 @media (max-width: 768px) {
   .main-sections {
-    flex-direction: column; /* Apilar verticalmente */
+    flex-direction: column; 
   }
 }
