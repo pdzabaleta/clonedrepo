@@ -12,6 +12,8 @@ const app = express()
 const static = require("./routes/static")
 // added in w03
 const baseController = require("./controllers/baseController")
+const inventoryRoute = require("./routes/inventoryRoute");
+
 
 /* ***********************
  * View Engine and Templates
@@ -44,3 +46,5 @@ app.listen(port, () => {
 
 // index rute
 app.get("/", baseController.buildHome)
+// Inventory routes
+app.use("/inv", inventoryRoute)
