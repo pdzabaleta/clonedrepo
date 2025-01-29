@@ -155,7 +155,7 @@ nav ul li a {
   background-color: #f9f9f9;
   display: grid;
   gap: 20px;
-  grid-template-columns: 1fr, 1fr;
+  grid-template-columns: 1fr 1fr;
 }
 
 /* Styles for the vehicle title */
@@ -284,6 +284,7 @@ nav ul li a {
   
     .namePrice span {
       font-size: 1.2rem;
+    }
   #wrapper {
     width: 90%;
   }
@@ -297,4 +298,3 @@ nav ul li a {
 
 
 
-}
