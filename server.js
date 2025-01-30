@@ -8,12 +8,35 @@ const inventoryRoute = require("./routes/inventoryRoute");
 const errorRoute = require("./routes/errorRoute");  // Importar la nueva ruta de error
 const utilities = require("./utilities/");
 const path = require("path");
+const session = require("express-session")
+const pool = require('./database/')
 
 app.set("view engine", "ejs");
 app.use(expressLayouts);
 app.set("layout", "layouts/layout");
 
 app.use(express.static("public"));
+
+/* ***********************
+ * Middleware
+ * ************************/
+app.use(session({
+  store: new (require('connect-pg-simple')(session))({
+    createTableIfMissing: true,
+    pool,
+  }),
+  secret: process.env.SESSION_SECRET,
+  resave: true,
+  saveUninitialized: true,
+  name: 'sessionId',
+}))
+
+// Express Messages Middleware
+app.use(require('connect-flash')())
+app.use(function(req, res, next){
+  res.locals.messages = require('express-messages')(req, res)
+  next()
+})
 
 // Rutas
 app.get("/", baseController.buildHome);
