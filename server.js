@@ -11,6 +11,7 @@ const utilities = require("./utilities/"); // Ensure utilities are required
 const path = require("path");
 const session = require("express-session");
 const pool = require("./database/");
+const bodyParser = require("body-parser")
 
 app.set("view engine", "ejs");
 app.use(expressLayouts);
@@ -39,6 +40,8 @@ app.use(function (req, res, next) {
   next();
 });
 
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 /* ****************************
  * Routes
  * ***************************/

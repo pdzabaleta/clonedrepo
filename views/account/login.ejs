@@ -1,17 +1,7 @@
 <h1 class="page-title"><%= title %></h1>
 
 <!-- Flash messages -->
-<% if (messages.error) { %>
-  <div class="flash-message flash-error">
-    <%= messages.error[0] %>
-  </div>
-<% } %>
-
-<% if (messages.success) { %>
-  <div class="flash-message flash-success">
-    <%= messages.success[0] %>
-  </div>
-<% } %>
+<%- messages() %>
 
 <!-- Login Form -->
 <form class="login-form" action="/account/login" method="POST">
