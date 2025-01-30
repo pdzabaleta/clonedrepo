@@ -1,0 +1,27 @@
+<h1 class="page-title"><%= title %></h1>
+
+<!-- Flash messages -->
+<% if (messages.error) { %>
+  <div class="flash-message flash-error">
+    <%= messages.error[0] %>
+  </div>
+<% } %>
+
+<% if (messages.success) { %>
+  <div class="flash-message flash-success">
+    <%= messages.success[0] %>
+  </div>
+<% } %>
+
+<!-- Login Form -->
+<form class="login-form" action="/account/login" method="POST">
+  <label for="email" class="form-label">Email:</label>
+  <input type="email" id="email" name="email" class="form-input" required>
+
+  <label for="password" class="form-label">Password:</label>
+  <input type="password" id="password" name="password" class="form-input" required>
+
+  <button type="submit" class="form-button">Login</button>
+</form>
+
+<p class="signup-link">No account? <a href="/account/register">Sign-up</a></p>

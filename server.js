@@ -6,6 +6,7 @@ const static = require("./routes/static");
 const baseController = require("./controllers/baseController");
 const inventoryRoute = require("./routes/inventoryRoute");
 const errorRoute = require("./routes/errorRoute"); // Import error route
+const accountRoute = require("./routes/accountRoute")
 const utilities = require("./utilities/"); // Ensure utilities are required
 const path = require("path");
 const session = require("express-session");
@@ -47,6 +48,7 @@ app.get("/", utilities.handleErrors(baseController.buildHome));
 // Other routes
 app.use("/inv", inventoryRoute);
 app.use("/", errorRoute); // Use the error route
+app.use("/account", accountRoute);
 
 /* ****************************
  * 404 Not Found Middleware

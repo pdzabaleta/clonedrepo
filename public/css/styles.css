@@ -264,6 +264,98 @@ nav ul li a {
   margin-top: 20px;
 }
 
+
+/* Styling for account secction  */
+/* flash messages */
+.flash-message {
+  padding: 10px;
+  margin: 20px auto;
+  max-width: 400px;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.flash-error {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.flash-success {
+  background-color: #d4edda;
+  color: #155724;
+}
+/* end of flash messages */
+.page-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-top: 20px;
+}
+
+/* Form styles */
+.login-form {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.form-button:hover {
+  background-color: #0056b3;
+}
+/* Enlace de Sign-up */
+.signup-link {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.signup-link__cta {
+  color: #007bff;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.signup-link__cta:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+.signup-link__cta:focus {
+  outline: none;
+  border-bottom: 2px solid #007bff;
+}
+
+
 /* Responsive design for mobile devices */
 @media (max-width: 768px) {
   .main-sections {
@@ -293,6 +385,22 @@ nav ul li a {
   }
   .vehicle-image-container {
     grid-column: 1/3;
+  }
+  .page-title {
+    font-size: 1.5rem;
+  }
+
+  .flash-message {
+    max-width: 100%;
+    padding: 8px;
+  }
+
+  .login-form {
+    padding: 15px;
+  }
+
+  .form-input, .form-button {
+    font-size: 1rem;
   }
 }
 
