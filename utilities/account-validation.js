@@ -1,7 +1,6 @@
-const utilities = require(".") 
-const { body, validationResult } = require("express-validator") 
-
-const validate = {}
+const utilities = require(".")
+  const { body, validationResult } = require("express-validator")
+  const validate = {}
 
 /*  **********************************
   *  Registration Data Validation Rules
@@ -49,27 +48,26 @@ validate.registrationRules = () => {
   }
 
   
-  /* ******************************
+/* ******************************
  * Check data and return errors or continue to registration
  * ***************************** */
-// Check Registration Data
 validate.checkRegData = async (req, res, next) => {
-    const errors = validationResult(req); // Usamos directamente validationResult aquí
+    const { account_firstname, account_lastname, account_email } = req.body
+    let errors = []
+    errors = validationResult(req)
     if (!errors.isEmpty()) {
-        let nav = await utilities.getNav();
-        // Asegúrate de pasar los errores como un array y no como un objeto complejo
-        res.render("account/register", {
-            errors: errors.array(), // Usamos errors.array() para obtener los errores en formato de array
-            title: "Registration",
-            nav,
-            account_firstname: req.body.account_firstname,
-            account_lastname: req.body.account_lastname,
-            account_email: req.body.account_email,
-        });
-        return;
+      let nav = await utilities.getNav()
+      res.render("account/register", {
+        errors,
+        title: "Registration",
+        nav,
+        account_firstname,
+        account_lastname,
+        account_email,
+      })
+      return
     }
-    next(); // Si no hay errores, pasamos al siguiente middleware
-};
-
+    next()
+  }
   
   module.exports = validate
