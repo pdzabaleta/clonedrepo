@@ -9,9 +9,31 @@ async function buildLoginView(req, res, next) {
     res.render("account/login", {
       title: "Login",
       nav,
+      errors: null, // Se añade la variable errors
     })
   }
-  
+  /* ****************************************
+*  Process Login
+* *************************************** */
+async function processLogin(req, res) {
+  let nav = await utilities.getNav()
+  const { account_email, account_password } = req.body
+
+  const loginResult = await accountModel.checkLogin(account_email, account_password)
+
+  if (loginResult) {
+    req.flash("success", "Login successful!")
+    res.redirect("/dashboard") // O a donde corresponda
+  } else {
+    req.flash("error", "Invalid email or password.")
+    res.status(401).render("account/login", {
+      title: "Login",
+      nav,
+      errors: [{ msg: "Invalid email or password." }], // Aquí se pasan los errores
+    })
+  }
+}
+
   /* ****************************************
 *  Deliver registration view
 * *************************************** */
@@ -56,4 +78,4 @@ async function registerAccount(req, res) {
   }
 }
 
-  module.exports = { buildLoginView, buildRegisterView, registerAccount }
+  module.exports = { buildLoginView, buildRegisterView, registerAccount, processLogin }
