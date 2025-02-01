@@ -14,13 +14,13 @@
     <!-- Registration Form -->
     <form action="/account/register" method="POST">
       <label for="first-name" class="register-form-label">First Name:</label>
-      <input type="text" id="first-name" name="account_firstname" required>
+      <input type="text" id="first-name" name="account_firstname" required value="<%= locals.account_firstname %>">
   
       <label for="last-name" class="register-form-label">Last Name:</label>
-      <input type="text" id="last-name" name="account_lastname" required>
+      <input type="text" id="last-name" name="account_lastname" required value="<%= locals.account_lastname %>">
   
       <label for="email" class="register-form-label">Email:</label>
-      <input type="email" id="email" name="account_email" required>
+      <input type="email" id="email" name="account_email" required value="<%= locals.account_email %>">
   
       <label for="password" class="register-form-label">Password:</label>
       <input type="password" id="password" name="account_password" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$">
