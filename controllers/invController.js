@@ -49,4 +49,19 @@ invCont.getVehicleDetails = async function (req, res, next) {
   }
 };
 
+/* ***************************
+ *  Show Inventory Management View
+
+The key is the line res.render("inventory/management", {...}), 
+which tells Express to use the management.ejs view inside the views/inventory/ folder.
+ * ************************** */
+invCont.showManagementView = async (req, res) => {
+  let nav = await utilities.getNav(); 
+  res.render("inventory/management", {
+    title: "Inventory Management",
+    nav, 
+    messages: req.flash(),
+  });
+};
+
 module.exports = invCont;

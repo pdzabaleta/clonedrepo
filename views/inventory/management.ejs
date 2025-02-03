@@ -1,0 +1,14 @@
+<h1 class="inventory-title">Inventory Management</h1>
+
+<% if (messages.error) { %>
+    <div class="inventory-flash-message inventory-error"><%= messages.error %></div>
+<% } %>
+
+<% if (messages.success) { %>
+    <div class="inventory-flash-message inventory-success"><%= messages.success %></div>
+<% } %>
+
+<div class="inventory-links">
+    <a href="/inv/add-classification" class="inventory-link">Add New Classification</a>
+    <a href="/inv/add-inventory" class="inventory-link">Add New Inventory Item</a>
+</div>

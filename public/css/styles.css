@@ -442,7 +442,56 @@ nav ul li a {
   color: #666;
   margin-top: -10px;
 }
+/* //////////////////////////management.ejs////////////////////////// */
+.inventory-title {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
 
+.inventory-flash-message {
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.inventory-error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.inventory-success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.inventory-links {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 400px;
+  margin: auto;
+}
+
+.inventory-link {
+  display: block;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.inventory-link:hover {
+  background-color: #0056b3;
+}
 
 /* Responsive design for mobile devices */
 @media (max-width: 768px) {
