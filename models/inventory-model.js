@@ -98,16 +98,8 @@ async function addVehicle(vehicle) {
       vehicle.inv_price,
       vehicle.inv_mileage
     ];
-
-    // Ejecutamos la consulta y esperamos el resultado
     const result = await pool.query(sql, params);
-    
-    // Verificamos si la inserción fue exitosa y devolvemos el ID del nuevo vehículo
-    if (result.rows.length > 0) {
-      return result.rows[0].inventory_id;
-    } else {
-      throw new Error("No vehicle was added to the database.");
-    }
+    return result.rows[0].inventory_id; // Retorna el ID insertado
   } catch (error) {
     console.error("Error adding vehicle:", error);
     throw error;

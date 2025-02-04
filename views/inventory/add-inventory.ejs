@@ -3,14 +3,13 @@
 <!-- Flash message -->
 <%- messages() %>
 
-
 <!-- Add Inventory Form -->
-<!-- The "novalidate" attribute is used to disable the native HTML5 validation so you can implement your own -->
 <form 
   id="addInventoryForm" 
   class="inventory-add-form" 
-  method="POST" 
+  method="POST"
 >
+  <!-- Make -->
   <div class="form-group">
     <label for="inv_make">Make</label>
     <input
@@ -23,6 +22,7 @@
     />
   </div>
 
+  <!-- Model -->
   <div class="form-group">
     <label for="inv_model">Model</label>
     <input
@@ -35,6 +35,7 @@
     />
   </div>
 
+  <!-- Description -->
   <div class="form-group">
     <label for="inv_description">Description</label>
     <textarea
@@ -45,6 +46,7 @@
     ><%= typeof inv_description !== 'undefined' ? inv_description : '' %></textarea>
   </div>
 
+  <!-- Image URL -->
   <div class="form-group">
     <label for="inv_image">Image URL</label>
     <input
@@ -57,6 +59,7 @@
     />
   </div>
 
+  <!-- Thumbnail URL -->
   <div class="form-group">
     <label for="inv_thumbnail">Thumbnail URL</label>
     <input
@@ -69,6 +72,22 @@
     />
   </div>
 
+  <!-- Year -->
+  <div class="form-group">
+    <label for="inv_year">Year</label>
+    <input
+      type="number"
+      name="inv_year"
+      id="inv_year"
+      class="form-control"
+      required
+      min="1900"
+      max="2100"
+      value="<%= typeof inv_year !== 'undefined' ? inv_year : '' %>"
+    />
+  </div>
+
+  <!-- Price -->
   <div class="form-group">
     <label for="inv_price">Price</label>
     <input
@@ -83,6 +102,7 @@
     />
   </div>
 
+  <!-- Mileage -->
   <div class="form-group">
     <label for="inv_mileage">Mileage</label>
     <input
@@ -96,22 +116,12 @@
     />
   </div>
 
-  <!-- <div class="form-group">
-    <label for="inv_color">Color</label>
-    <input
-      type="text"
-      name="inv_color"
-      id="inv_color"
-      class="form-control"
-      required
-      value="<%= typeof inv_color !== 'undefined' ? inv_color : '' %>"
-    />
-  </div> -->
-
+  <!-- Classification -->
   <div class="form-group">
     <label for="classification_id">Classification</label>
     <!-- The classification list is injected by the controller using the utility function -->
     <%- classificationList %>
+
   </div>
 
   <button type="submit" class="btn btn-primary">Add Vehicle</button>

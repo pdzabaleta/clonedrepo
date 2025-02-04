@@ -94,6 +94,8 @@ invCont.addClassification = async (req, res, next) => {
   }
 };
 
+// aqui empieza
+
 
 /* ***************************
  *  Show Add Inventory Form
@@ -130,6 +132,7 @@ invCont.showAddInventoryForm = async (req, res, next) => {
  * *************************** */
 invCont.addInventory = async (req, res, next) => {
   try {
+    console.log("Datos recibidos:", req.body); 
     let nav = await utilities.getNav();
 
     // Destructure form data from the request body
@@ -197,24 +200,26 @@ invCont.addInventory = async (req, res, next) => {
       });
     }
 
-    // Build the new vehicle object
-    const newVehicle = {
-      inv_make,
-      inv_model,
-      inv_description,
-      inv_image,
-      inv_thumbnail,
-      classification_id,
-      inv_year,
-      inv_price,
-      inv_mileage
-    };
+
+  // Build the new vehicle object, convirtiendo a número los campos numéricos:
+const newVehicle = {
+  inv_make,
+  inv_model,
+  inv_description,
+  inv_image,
+  inv_thumbnail,
+  classification_id: Number(classification_id),
+  inv_year: Number(inv_year),
+  inv_price: Number(inv_price),
+  inv_mileage: Number(inv_mileage)
+};
 
     // Insert the new vehicle using the model function
-    // const result = await invModel.addVehicle(newVehicle);
+    const result = await invModel.addVehicle(newVehicle);
+
     if (result) {
-      await invModel.addVehicle(newVehicle);
       req.flash("success", "Vehicle added successfully.");
+      console.log("Redirecting to /inv...");
       // Redirect to your inventory management view or main inventory page (adjust the route as needed)
       return res.redirect("/inv");
     } else {
@@ -240,5 +245,6 @@ invCont.addInventory = async (req, res, next) => {
     next(error);
   }
 };
+
 
 module.exports = invCont;

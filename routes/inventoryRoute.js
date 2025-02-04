@@ -24,4 +24,5 @@ router.get("/add-inventory",  utilities.handleErrors(invController.showAddInvent
 
 // Route to process the add inventory form submission
 router.post("/add-inventory", utilities.handleErrors(invController.addInventory));
+
 module.exports = router;
