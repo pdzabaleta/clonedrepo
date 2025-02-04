@@ -7,7 +7,36 @@ async function getClassifications() {
   return await pool.query("SELECT * FROM public.classification ORDER BY classification_name");
 }
 
-module.exports = {getClassifications}
+/* ***************************************
+ * Add a new classification
+ ************************************** */
+async function addClassification(classification_name) {
+  try {
+    await pool.query(
+      "INSERT INTO public.classification (classification_name) VALUES ($1)",
+      [classification_name]
+    );
+  } catch (error) {
+    console.error("Error adding classification:", error);
+    throw error;
+  }
+}
+
+/* ***************************************
+ * Check if a classification already exists
+ ************************************** */
+async function checkExistingClassification(classification_name) {
+  try {
+    const result = await pool.query(
+      "SELECT * FROM public.classification WHERE classification_name = $1",
+      [classification_name]
+    );
+    return result.rows.length > 0; // If any row is returned, the classification exists
+  } catch (error) {
+    console.error("Error checking if classification exists:", error);
+    throw error;
+  }
+}
 
 /* ***************************
  *  Get all inventory items and classification_name by classification_id
@@ -44,4 +73,4 @@ async function getVehicleById(inventoryId) {
   }
 }
 
-module.exports = {getClassifications, getInventoryByClassificationId, getVehicleById};
+module.exports = { getClassifications, addClassification, checkExistingClassification, getInventoryByClassificationId, getVehicleById };

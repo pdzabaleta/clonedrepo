@@ -1,27 +1,34 @@
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
 const env = require("dotenv").config();
-const app = express();
+const path = require("path");
+const session = require("express-session");
+const bodyParser = require("body-parser");
+const pool = require("./database/");
+const utilities = require("./utilities/"); // Ensure utilities are required
+
+// Routes
 const static = require("./routes/static");
 const baseController = require("./controllers/baseController");
 const inventoryRoute = require("./routes/inventoryRoute");
 const errorRoute = require("./routes/errorRoute"); // Import error route
-const accountRoute = require("./routes/accountRoute")
-const utilities = require("./utilities/"); // Ensure utilities are required
-const path = require("path");
-const session = require("express-session");
-const pool = require("./database/");
-const bodyParser = require("body-parser")
+const accountRoute = require("./routes/accountRoute");
 
+const app = express();
+
+// ****************************
+// View Engine Setup
+// ****************************
 app.set("view engine", "ejs");
 app.use(expressLayouts);
 app.set("layout", "layouts/layout");
-
 app.use(express.static("public"));
 
-/* ****************************
- * Middleware
- * ***************************/
+// ****************************
+// Middleware Setup
+// ****************************
+
+// Session Middleware
 app.use(session({
   store: new (require("connect-pg-simple")(session))({
     createTableIfMissing: true,
@@ -35,16 +42,21 @@ app.use(session({
 
 // Express Messages Middleware
 app.use(require("connect-flash")());
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
   res.locals.messages = require("express-messages")(req, res);
   next();
 });
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
-/* ****************************
- * Routes
- * ***************************/
+
+
+// Body Parser Middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+
+// ****************************
+// Routes Setup
+// ****************************
+
 // Index route with error handling middleware
 app.get("/", utilities.handleErrors(baseController.buildHome));
 
@@ -53,17 +65,16 @@ app.use("/inv", inventoryRoute);
 app.use("/", errorRoute); // Use the error route
 app.use("/account", accountRoute);
 
-/* ****************************
- * 404 Not Found Middleware
- * ***************************/
+// ****************************
+// 404 Not Found Middleware
+// ****************************
 app.use(async (req, res, next) => {
   next({ status: 404, message: "Sorry, we appear to have lost that page." });
 });
 
-/* ****************************
- * Express Error Handler
- * Place after all other middleware
- * ***************************/
+// ****************************
+// Express Error Handler
+// ****************************
 app.use(async (err, req, res, next) => {
   let nav = await utilities.getNav();
   console.error(`Error at: "${req.originalUrl}": ${err.message}`);
@@ -77,6 +88,9 @@ app.use(async (err, req, res, next) => {
   });
 });
 
+// ****************************
+// Server Setup
+// ****************************
 const port = process.env.PORT;
 const host = process.env.HOST;
 

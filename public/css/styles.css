@@ -449,25 +449,72 @@ nav ul li a {
   margin-bottom: 20px;
 }
 
-.inventory-flash-message {
-  padding: 10px;
-  margin-bottom: 15px;
-  border-radius: 5px;
-  font-weight: bold;
-  text-align: center;
+/* General styles for flash messages */
+.error,
+.success {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  margin: 15px 0;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 1rem;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+  list-style: none; /* Remove list styles */
+  animation: fadeIn 0.5s ease-in-out;
 }
 
-.inventory-error {
+/* Error message */
+.error {
   background-color: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
+  color: #842029;
+  border-left: 5px solid #dc3545;
 }
 
-.inventory-success {
-  background-color: #d4edda;
-  color: #155724;
-  border: 1px solid #c3e6cb;
+/* Success message */
+.success {
+  background-color: #d1e7dd;
+  color: #0f5132;
+  border-left: 5px solid #198754;
 }
+
+
+/* .error::after,Close button
+.success::after {
+  content: "×";
+  font-size: 1.4rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 15px;
+  color: inherit;
+  transition: opacity 0.3s ease;
+}
+
+.error:hover::after,
+.success:hover::after {
+  opacity: 0.6;
+}
+
+Hide message when clicking close
+.error:has(::after:hover),
+.success:has(::after:hover) {
+  display: none;
+} */
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 
 .inventory-links {
   display: flex;
@@ -492,6 +539,83 @@ nav ul li a {
 .inventory-link:hover {
   background-color: #0056b3;
 }
+/* ///////////////////////////////////add-classification.ejs////////////////////////////////////////// */
+.add-classification-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.page-title-classification {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.add-classification-form .form-group {
+  margin-bottom: 15px;
+}
+
+.add-classification-form label {
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.add-classification-form input.form-control {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.add-classification-form input.form-control:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.add-classification-form .form-text {
+  font-size: 0.875rem;
+  color: #6c757d;
+  margin-top: 5px;
+}
+
+.add-classification-form button.btn {
+  width: 100%;
+  padding: 12px;
+  font-size: 1.1rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-classification-form button.btn:hover {
+  background-color: #0056b3;
+}
+
+/* .alert {
+  margin-top: 20px;
+  padding: 10px;
+  text-align: center;
+  font-size: 1.1rem;
+  border-radius: 4px;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+} */
 
 /* Responsive design for mobile devices */
 @media (max-width: 768px) {
@@ -550,6 +674,18 @@ nav ul li a {
   .register-form-title {
     font-size: 1.5rem;
   }
+  /* ////////////classification.ejs/////////////////////// */
+  .add-classification-container {
+    padding: 15px;
+}
+
+.page-title-classification {
+    font-size: 1.5rem;
+}
+
+.add-classification-form button.btn {
+    font-size: 1rem;
+}
 }
 
 

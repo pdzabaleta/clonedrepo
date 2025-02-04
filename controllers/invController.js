@@ -59,9 +59,39 @@ invCont.showManagementView = async (req, res) => {
   let nav = await utilities.getNav(); 
   res.render("inventory/management", {
     title: "Inventory Management",
-    nav, 
-    messages: req.flash(),
+    nav
+    // messages: req.flash(),
   });
+};
+
+/* ***************************
+ *  Add Classification - Show Form
+ * ************************** */
+invCont.showAddClassificationForm = async (req, res) => {
+  let nav = await utilities.getNav(); 
+  res.render("inventory/add-classification", {
+    title: "Add New Classification",
+    nav,
+    classification_name: "",  // Valor por defecto vacío
+  });
+};
+
+/* ***************************
+ *  Add Classification - Handle POST request
+ * ************************** */
+invCont.addClassification = async (req, res, next) => {
+  let { classification_name } = req.body;
+  // Asegúrate de normalizar (aunque ya se hizo en el middleware)
+  classification_name = classification_name.charAt(0).toUpperCase() + classification_name.slice(1).toLowerCase();
+
+  try {
+    await invModel.addClassification(classification_name);
+    req.flash("success", "Classification added successfully.");
+    res.redirect("/inv");
+  } catch (error) {
+    req.flash("error", "There was an error adding the classification.");
+    res.redirect("/inv/add-classification");
+  }
 };
 
 module.exports = invCont;
