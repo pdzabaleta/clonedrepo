@@ -94,4 +94,151 @@ invCont.addClassification = async (req, res, next) => {
   }
 };
 
+
+/* ***************************
+ *  Show Add Inventory Form
+ * *************************** */
+invCont.showAddInventoryForm = async (req, res, next) => {
+  try {
+    let nav = await utilities.getNav();
+    // Build the classification list (the <select> element) from the utility
+    const classificationList = await utilities.buildClassificationList();
+    res.render("inventory/add-inventory", {
+      title: "Add New Vehicle",
+      nav,
+      classificationList,
+      // Sticky field values (initial/default values)
+      inv_make: "",
+      inv_model: "",
+      inv_description: "",
+      inv_image: "/images/vehicles/no-image.png",
+      inv_thumbnail: "/images/vehicles/no-image-tn.png",
+      inv_year: "",
+      inv_price: "",
+      inv_mileage: "",
+      flashMessage: "",
+      errors: []
+    });
+  } catch (error) {
+    console.error("Error displaying add inventory form:", error);
+    next(error);
+  }
+};
+
+/* ***************************
+ *  Handle Add Inventory POST Request
+ * *************************** */
+invCont.addInventory = async (req, res, next) => {
+  try {
+    let nav = await utilities.getNav();
+
+    // Destructure form data from the request body
+    const {
+      inv_make,
+      inv_model,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      classification_id,
+      inv_year,
+      inv_price,
+      inv_mileage
+    } = req.body;
+
+    // Basic server-side validation – adjust as needed
+    const errors = [];
+    if (!inv_make || inv_make.trim() === "") {
+      errors.push({ msg: "Make is required." });
+    }
+    if (!inv_model || inv_model.trim() === "") {
+      errors.push({ msg: "Model is required." });
+    }
+    if (!inv_description || inv_description.trim() === "") {
+      errors.push({ msg: "Description is required." });
+    }
+    if (!inv_image || inv_image.trim() === "") {
+      errors.push({ msg: "Image URL is required." });
+    }
+    if (!inv_thumbnail || inv_thumbnail.trim() === "") {
+      errors.push({ msg: "Thumbnail URL is required." });
+    }
+    if (!classification_id || classification_id.trim() === "") {
+      errors.push({ msg: "Classification is required." });
+    }
+    if (!inv_year || isNaN(inv_year) || Number(inv_year) < 1886) {
+      errors.push({ msg: "A valid year (>=1886) is required." });
+    }
+    if (!inv_price || isNaN(inv_price) || Number(inv_price) < 0) {
+      errors.push({ msg: "Price must be a number greater than or equal to 0." });
+    }
+    if (!inv_mileage || isNaN(inv_mileage) || Number(inv_mileage) < 0) {
+      errors.push({ msg: "Mileage must be a number greater than or equal to 0." });
+    }
+
+    // Rebuild classification list with the selected classification (if any)
+    const classificationList = await utilities.buildClassificationList(classification_id);
+
+    // If errors exist, re-render the form with errors and sticky values
+    if (errors.length > 0) {
+      return res.status(400).render("inventory/add-inventory", {
+        title: "Add New Vehicle",
+        nav,
+        classificationList,
+        errors,
+        flashMessage: "",
+        inv_make,
+        inv_model,
+        inv_description,
+        inv_image,
+        inv_thumbnail,
+        inv_year,
+        inv_price,
+        inv_mileage
+      });
+    }
+
+    // Build the new vehicle object
+    const newVehicle = {
+      inv_make,
+      inv_model,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      classification_id,
+      inv_year,
+      inv_price,
+      inv_mileage
+    };
+
+    // Insert the new vehicle using the model function
+    // const result = await invModel.addVehicle(newVehicle);
+    if (result) {
+      await invModel.addVehicle(newVehicle);
+      req.flash("success", "Vehicle added successfully.");
+      // Redirect to your inventory management view or main inventory page (adjust the route as needed)
+      return res.redirect("/inv");
+    } else {
+      req.flash("error", "Failed to add the vehicle. Please try again.");
+      return res.status(400).render("inventory/add-inventory", {
+        title: "Add New Vehicle",
+        nav,
+        classificationList,
+        errors: [],
+        flashMessage: req.flash("error"),
+        inv_make,
+        inv_model,
+        inv_description,
+        inv_image,
+        inv_thumbnail,
+        inv_year,
+        inv_price,
+        inv_mileage
+      });
+    }
+  } catch (error) {
+    console.error("Error adding vehicle:", error);
+    next(error);
+  }
+};
+
 module.exports = invCont;

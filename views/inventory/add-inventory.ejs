@@ -1,0 +1,133 @@
+<h1 class="inventory-header">Add New Vehicle</h1>
+
+<!-- Flash message -->
+<%- messages() %>
+
+
+<!-- Add Inventory Form -->
+<!-- The "novalidate" attribute is used to disable the native HTML5 validation so you can implement your own -->
+<form 
+  id="addInventoryForm" 
+  class="inventory-add-form" 
+  method="POST" 
+>
+  <div class="form-group">
+    <label for="inv_make">Make</label>
+    <input
+      type="text"
+      name="inv_make"
+      id="inv_make"
+      class="form-control"
+      required
+      value="<%= typeof inv_make !== 'undefined' ? inv_make : '' %>"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="inv_model">Model</label>
+    <input
+      type="text"
+      name="inv_model"
+      id="inv_model"
+      class="form-control"
+      required
+      value="<%= typeof inv_model !== 'undefined' ? inv_model : '' %>"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="inv_description">Description</label>
+    <textarea
+      name="inv_description"
+      id="inv_description"
+      class="form-control"
+      required
+    ><%= typeof inv_description !== 'undefined' ? inv_description : '' %></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="inv_image">Image URL</label>
+    <input
+      type="text"
+      name="inv_image"
+      id="inv_image"
+      class="form-control"
+      required
+      value="<%= typeof inv_image !== 'undefined' ? inv_image : '/images/vehicles/no-image.png' %>"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="inv_thumbnail">Thumbnail URL</label>
+    <input
+      type="text"
+      name="inv_thumbnail"
+      id="inv_thumbnail"
+      class="form-control"
+      required
+      value="<%= typeof inv_thumbnail !== 'undefined' ? inv_thumbnail : '/images/vehicles/no-image_tn.png' %>"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="inv_price">Price</label>
+    <input
+      type="number"
+      name="inv_price"
+      id="inv_price"
+      class="form-control"
+      required
+      min="0"
+      step="0.01"
+      value="<%= typeof inv_price !== 'undefined' ? inv_price : '' %>"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="inv_mileage">Mileage</label>
+    <input
+      type="number"
+      name="inv_mileage"
+      id="inv_mileage"
+      class="form-control"
+      required
+      min="0"
+      value="<%= typeof inv_mileage !== 'undefined' ? inv_mileage : '' %>"
+    />
+  </div>
+
+  <!-- <div class="form-group">
+    <label for="inv_color">Color</label>
+    <input
+      type="text"
+      name="inv_color"
+      id="inv_color"
+      class="form-control"
+      required
+      value="<%= typeof inv_color !== 'undefined' ? inv_color : '' %>"
+    />
+  </div> -->
+
+  <div class="form-group">
+    <label for="classification_id">Classification</label>
+    <!-- The classification list is injected by the controller using the utility function -->
+    <%- classificationList %>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Add Vehicle</button>
+</form>
+
+<script>
+  // Client-side validation script
+  function validateForm(event) {
+    const form = document.getElementById("addInventoryForm");
+    if (!form.checkValidity()) {
+      event.preventDefault();
+      alert("Please fill in all required fields correctly.");
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("addInventoryForm").addEventListener("submit", validateForm);
+  });
+</script>

@@ -19,4 +19,9 @@ router.get("/add-classification", utilities.handleErrors(invController.showAddCl
 // route for classification 
 router.post("/add-classification", validate.classificationRules(), validate.checkClassificationData, utilities.handleErrors(invController.addClassification));
 
+// Route to display the add inventory form
+router.get("/add-inventory",  utilities.handleErrors(invController.showAddInventoryForm));
+
+// Route to process the add inventory form submission
+router.post("/add-inventory", utilities.handleErrors(invController.addInventory));
 module.exports = router;

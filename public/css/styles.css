@@ -503,6 +503,87 @@ Hide message when clicking close
   display: none;
 } */
 
+/* ================================
+   Add New Vehicle Page Styles
+   ================================ */
+
+/* Page Header */
+.inventory-header {
+  font-size: 2rem;
+  text-align: center;
+  margin-top: 20px;
+  color: #333;
+}
+
+/* Inventory Form Container */
+.inventory-add-form {
+  max-width: 600px;
+  margin: 0 auto 40px auto;
+  padding: 20px;
+  background: #f5f5f5;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Groups */
+.inventory-add-form .form-group {
+  margin-bottom: 15px;
+}
+
+/* Labels */
+.inventory-add-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #444;
+}
+
+/* Inputs, Textareas, and Selects */
+.inventory-add-form .form-control {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  color: #333;
+  box-sizing: border-box;
+}
+
+.inventory-add-form .form-control:focus {
+  outline: none;
+  border-color: #66afe9;
+  box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+/* Button */
+.inventory-add-form .btn {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.inventory-add-form .btn:hover {
+  background-color: #0056b3;
+}
+
+/* Optional: Style the select element (if not already styled by .form-control) */
+.inventory-add-form select {
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  color: #333;
+  width: 100%;
+  box-sizing: border-box;
+}
+
 /* Fade-in animation */
 @keyframes fadeIn {
   from {

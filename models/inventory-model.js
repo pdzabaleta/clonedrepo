@@ -2,14 +2,14 @@ const pool = require("../database/");
 
 /* ***************************
  *  Get all classification data
- * ************************** */
+ * *************************** */
 async function getClassifications() {
   return await pool.query("SELECT * FROM public.classification ORDER BY classification_name");
 }
 
 /* ***************************************
  * Add a new classification
- ************************************** */
+ ***************************************/
 async function addClassification(classification_name) {
   try {
     await pool.query(
@@ -24,14 +24,14 @@ async function addClassification(classification_name) {
 
 /* ***************************************
  * Check if a classification already exists
- ************************************** */
+ ***************************************/
 async function checkExistingClassification(classification_name) {
   try {
     const result = await pool.query(
       "SELECT * FROM public.classification WHERE classification_name = $1",
       [classification_name]
     );
-    return result.rows.length > 0; // If any row is returned, the classification exists
+    return result.rows.length > 0;
   } catch (error) {
     console.error("Error checking if classification exists:", error);
     throw error;
@@ -40,37 +40,85 @@ async function checkExistingClassification(classification_name) {
 
 /* ***************************
  *  Get all inventory items and classification_name by classification_id
- * ************************** */
+ * *************************** */
 async function getInventoryByClassificationId(classification_id) {
   try {
     const data = await pool.query(
       `SELECT * FROM public.inventory AS i 
-      JOIN public.classification AS c 
-      ON i.classification_id = c.classification_id 
-      WHERE i.classification_id = $1`,
+       JOIN public.classification AS c 
+       ON i.classification_id = c.classification_id 
+       WHERE i.classification_id = $1`,
       [classification_id]
     );
     return data.rows;
   } catch (error) {
-    console.error("getInventoryByClassificationId error " + error);
+    console.error("getInventoryByClassificationId error: " + error);
   }
 }
 
 /* ***************************
  *  Get vehicle details by inventoryId
- * ************************** */
+ * *************************** */
 async function getVehicleById(inventoryId) {
   try {
-    const res = await pool.query('SELECT * FROM public.inventory WHERE inventory_id = $1', [inventoryId]);
-
+    const res = await pool.query(
+      'SELECT * FROM public.inventory WHERE inventory_id = $1',
+      [inventoryId]
+    );
     if (res.rows.length === 0) {
       return null;
     }
-
     return res.rows[0];
   } catch (error) {
     throw error;
   }
 }
 
-module.exports = { getClassifications, addClassification, checkExistingClassification, getInventoryByClassificationId, getVehicleById };
+
+/* ***************************************
+ * Add a new vehicle to the inventory table
+ ***************************************/
+async function addVehicle(vehicle) {
+  try {
+    const sql = `
+      INSERT INTO public.inventory 
+        (inv_make, inv_model, inv_description, inv_image, inv_thumbnail, classification_id, inv_year, inv_price, inv_mileage)
+      VALUES 
+        ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+      RETURNING inventory_id;
+    `;
+    const params = [
+      vehicle.inv_make,
+      vehicle.inv_model,
+      vehicle.inv_description,
+      vehicle.inv_image,
+      vehicle.inv_thumbnail,
+      vehicle.classification_id,
+      vehicle.inv_year,
+      vehicle.inv_price,
+      vehicle.inv_mileage
+    ];
+
+    // Ejecutamos la consulta y esperamos el resultado
+    const result = await pool.query(sql, params);
+    
+    // Verificamos si la inserción fue exitosa y devolvemos el ID del nuevo vehículo
+    if (result.rows.length > 0) {
+      return result.rows[0].inventory_id;
+    } else {
+      throw new Error("No vehicle was added to the database.");
+    }
+  } catch (error) {
+    console.error("Error adding vehicle:", error);
+    throw error;
+  }
+}
+
+module.exports = {
+  getClassifications,
+  addClassification,
+  checkExistingClassification,
+  getInventoryByClassificationId,
+  getVehicleById,
+  addVehicle
+};
