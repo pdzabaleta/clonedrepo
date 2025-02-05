@@ -81,7 +81,7 @@
       id="inv_year"
       class="form-control"
       required
-      min="1900"
+      min="1886"
       max="2100"
       value="<%= typeof inv_year !== 'undefined' ? inv_year : '' %>"
     />
@@ -127,17 +127,4 @@
   <button type="submit" class="btn btn-primary">Add Vehicle</button>
 </form>
 
-<script>
-  // Client-side validation script
-  function validateForm(event) {
-    const form = document.getElementById("addInventoryForm");
-    if (!form.checkValidity()) {
-      event.preventDefault();
-      alert("Please fill in all required fields correctly.");
-    }
-  }
 
-  document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("addInventoryForm").addEventListener("submit", validateForm);
-  });
-</script>

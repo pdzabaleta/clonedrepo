@@ -3,6 +3,7 @@ const router = express.Router();
 const utilities = require("../utilities/"); // Requerido para 'handleErrors' y 'getNav'
 const invController = require("../controllers/invController");
 const validate = require("../utilities/classificationValidation"); // Requerido para las validaciones
+const inventoryValidation = require("../utilities/inventoryValidation");
 
 // Route to build inventory by classification view
 router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId));
@@ -23,6 +24,10 @@ router.post("/add-classification", validate.classificationRules(), validate.chec
 router.get("/add-inventory",  utilities.handleErrors(invController.showAddInventoryForm));
 
 // Route to process the add inventory form submission
-router.post("/add-inventory", utilities.handleErrors(invController.addInventory));
-
+router.post(
+    "/add-inventory",
+    inventoryValidation.inventoryRules(),
+    inventoryValidation.checkInventoryData,
+    utilities.handleErrors(invController.addInventory)
+  );
 module.exports = router;
