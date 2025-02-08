@@ -12,10 +12,9 @@ router.get("/register", utilities.handleErrors(accountController.buildRegisterVi
 router.post("/register",regValidate.registrationRules(), regValidate.checkRegData, utilities.handleErrors(accountController.registerAccount)
   )
  // Process the login attempt
-router.post(
-  "/login",
-  (req, res) => {
-    res.status(200).send('login process')
-  }
-)
+router.post("/login", regValidate.loginRules(), regValidate.checkLoginData, utilities.handleErrors(accountController.accountLogin))
+
+// Account management view after login
+router.get("/", utilities.handleErrors(accountController.accountManagementView));
+
 module.exports = router;

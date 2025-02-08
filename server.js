@@ -6,6 +6,7 @@ const session = require("express-session");
 const bodyParser = require("body-parser");
 const pool = require("./database/");
 const utilities = require("./utilities/"); // Ensure utilities are required
+const cookieParser = require("cookie-parser");
 
 // Routes
 const static = require("./routes/static");
@@ -52,6 +53,12 @@ app.use((req, res, next) => {
 // Body Parser Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+
+// Cookie JWT middleware
+app.use(cookieParser())
+
+// JWT Cookies middleware
+app.use(utilities.checkJWTToken)
 
 // ****************************
 // Routes Setup
