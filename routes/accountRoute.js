@@ -15,6 +15,6 @@ router.post("/register",regValidate.registrationRules(), regValidate.checkRegDat
 router.post("/login", regValidate.loginRules(), regValidate.checkLoginData, utilities.handleErrors(accountController.accountLogin))
 
 // Account management view after login
-router.get("/", utilities.handleErrors(accountController.accountManagementView));
+router.get("/", utilities.checkLogin ,utilities.handleErrors(accountController.accountManagementView));
 
 module.exports = router;

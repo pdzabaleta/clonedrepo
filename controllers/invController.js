@@ -57,9 +57,11 @@ which tells Express to use the management.ejs view inside the views/inventory/ f
  * ************************** */
 invCont.showManagementView = async (req, res) => {
   let nav = await utilities.getNav(); 
+  const classificationSelect = await utilities.buildClassificationList()
   res.render("inventory/management", {
     title: "Inventory Management",
-    nav
+    nav,
+    classificationSelect
     // messages: req.flash(),
   });
 };
@@ -190,6 +192,19 @@ invCont.addInventory = async (req, res, next) => {
     next(error);
   }
 };
+
+/* ***************************
+ *  Return Inventory by Classification As JSON
+ * ************************** */
+invCont.getInventoryJSON = async (req, res, next) => {
+  const classification_id = parseInt(req.params.classification_id)
+  const invData = await invModel.getInventoryByClassificationId(classification_id)
+  if (invData[0].inventory_id) {
+    return res.json(invData)
+  } else {
+    next(new Error("No data returned"))
+  }
+}
 
 
 module.exports = invCont;

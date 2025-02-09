@@ -30,4 +30,7 @@ router.post(
     inventoryValidation.checkInventoryData,
     utilities.handleErrors(invController.addInventory)
   );
+// route for vehicle modification
+  router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
+  
 module.exports = router;
