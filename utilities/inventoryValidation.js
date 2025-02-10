@@ -39,6 +39,18 @@ inventoryValidation.inventoryRules = () => {
   ];
 };
 
+/* ***************************************
+ * Reglas de validación eliminar inventario
+ ***************************************/
+
+inventoryValidation.deleteRules = () => {
+  return [
+    body("inventory_id")
+      .notEmpty().withMessage("Vehicle ID is required.")
+      .isInt().withMessage("Vehicle ID must be a number.")
+  ];
+};
+
 /* *******************************************
  * Verificar datos de inventario y enviar errores mediante flash
  ********************************************/
@@ -96,6 +108,32 @@ inventoryValidation.checkUpdateData = async (req, res, next) => {
         inv_mileage: req.body.inv_mileage
       });
       
+  }
+  next();
+};
+
+/* *******************************************
+ *  errors will be directed back to the delete view
+ ********************************************/
+inventoryValidation.checkDeleteData = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    // Unir todos los mensajes de error en una cadena
+    const errorMsgs = "<ul>" + errors.array().map(e => `<li>${e.msg}</li>`).join("") + "</ul>";
+    req.flash("error", errorMsgs);
+    let nav = await utilities.getNav();
+    let classificationSelect = await utilities.buildClassificationList(req.body.classification_id);
+    return res.status(400).render("inventory/delete-confirm", {
+        title: "Delete Vehicle", // Título para la vista de eliminación
+        nav,
+        classificationSelect,
+        errors: errors.array(),
+        inventory_id: req.body.inventory_id,
+        inv_make: req.body.inv_make,
+        inv_model: req.body.inv_model,
+        inv_year: req.body.inv_year,
+        inv_price: req.body.inv_price
+    });
   }
   next();
 };

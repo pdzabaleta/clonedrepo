@@ -687,6 +687,72 @@ Hide message when clicking close
   background-color: #0056b3;
 }
 
+/* Estilos para la sección de Inventory Management */
+.inventory-section {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 25px;
+  margin: 30px 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.inventory-section-title {
+  font-size: 2rem;
+  color: #2c3e50;
+  margin-bottom: 10px;
+  border-bottom: 3px solid #3498db;
+  padding-bottom: 10px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.inventory-section-description {
+  font-size: 1.1rem;
+  color: #7f8c8d;
+  margin-bottom: 20px;
+}
+
+select#classification_id {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
+
+#inventoryDisplay {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+#inventoryDisplay thead {
+  background-color: #3498db;
+  color: #ffffff;
+}
+
+#inventoryDisplay th,
+#inventoryDisplay td {
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  text-align: left;
+}
+
+#inventoryDisplay tbody tr:nth-child(even) {
+  background-color: #f8f8f8;
+}
+
+noscript {
+  display: block;
+  margin-top: 20px;
+  font-size: 0.9rem;
+  color: #e74c3c;
+  font-weight: bold;
+}
+
 /* .alert {
   margin-top: 20px;
   padding: 10px;

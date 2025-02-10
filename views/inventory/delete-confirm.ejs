@@ -1,0 +1,27 @@
+<h1 class="inventory-header">Delete Vehicle</h1>
+<p>Confirm Deletion - The delete is permanent. Are you sure you want to delete this vehicle?</p>
+
+<!-- Flash messages -->
+<%- messages() %>
+
+<form id="deleteForm" action="/inv/delete" method="POST" class="inventory-add-form">
+  <div class="form-group">
+    <label for="inv_make">Make</label>
+    <input type="text" name="inv_make" id="inv_make" class="form-control" readonly value="<%= typeof inv_make !== 'undefined' ? inv_make : '' %>"/>
+  </div>
+  <div class="form-group">
+    <label for="inv_model">Model</label>
+    <input type="text" name="inv_model" id="inv_model" class="form-control" readonly value="<%= typeof inv_model !== 'undefined' ? inv_model : '' %>"/>
+  </div>
+  <div class="form-group">
+    <label for="inv_year">Year</label>
+    <input type="number" name="inv_year" id="inv_year" class="form-control" readonly value="<%= typeof inv_year !== 'undefined' ? inv_year : '' %>"/>
+  </div>
+  <div class="form-group">
+    <label for="inv_price">Price</label>
+    <input type="number" name="inv_price" id="inv_price" class="form-control" readonly value="<%= typeof inv_price !== 'undefined' ? inv_price : '' %>"/>
+  </div>
+
+  <input type="hidden" name="inventory_id" value="<%= inventory_id %>"/>
+  <button type="submit" class="btn btn-danger">Delete Vehicle</button>
+</form>

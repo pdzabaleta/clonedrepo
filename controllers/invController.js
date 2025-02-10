@@ -302,4 +302,52 @@ invCont.updateInventory = async (req, res, next) => {
   }
 };
 
+/* ***************************
+ * Render delete confirmation view
+ *************************** */
+invCont.deleteInventoryView = async (req, res, next) => {
+  try {
+    const inventory_id = parseInt(req.params.inventory_id);
+    const nav = await utilities.getNav();
+    const itemData = await invModel.getVehicleById(inventory_id);
+    if (!itemData) {
+      throw new Error("Vehicle not found");
+    }
+    const itemName = `${itemData.inv_make} ${itemData.inv_model}`;
+    res.render("inventory/delete-confirm", {
+      title: "Delete " + itemName,
+      nav,
+      errors: null,
+      inventory_id: itemData.inventory_id,
+      inv_make: itemData.inv_make,
+      inv_model: itemData.inv_model,
+      inv_year: itemData.inv_year,
+      inv_price: itemData.inv_price
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/* ***************************
+ * Process deletion of an inventory item
+ *************************** */
+invCont.deleteInventory = async (req, res, next) => {
+  try {
+    const inventory_id = parseInt(req.body.inventory_id);
+    const deleteResult = await invModel.deleteInventoryItem(inventory_id);
+    
+    // Aquí asumimos que deleteResult.rowCount indica el número de filas afectadas.
+    if (deleteResult.rowCount && deleteResult.rowCount > 0) {
+      req.flash("success", "Vehicle deleted successfully.");
+      return res.redirect("/inv");
+    } else {
+      req.flash("error", "Failed to delete the vehicle. Please try again.");
+      return res.redirect("/inv/delete/" + inventory_id);
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = invCont;
