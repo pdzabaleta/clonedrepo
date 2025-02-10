@@ -69,4 +69,36 @@ inventoryValidation.checkInventoryData = async (req, res, next) => {
   next();
 };
 
+/* *******************************************
+ *  errors will be directed back to the edit view
+ ********************************************/
+inventoryValidation.checkUpdateData = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    // Unir todos los mensajes de error en una cadena
+    const errorMsgs = "<ul>" + errors.array().map(e => `<li>${e.msg}</li>`).join("") + "</ul>";
+    req.flash("error", errorMsgs);
+    let nav = await utilities.getNav();
+    let classificationSelect = await utilities.buildClassificationList(req.body.classification_id);
+    return res.status(400).render("inventory/edit-inventory", {
+        title: "Modify New Vehicle",
+        nav,
+        classificationSelect,
+        errors: errors.array(),
+        intentory_id: req.body.inventory_id,
+        inv_make: req.body.inv_make,
+        inv_model: req.body.inv_model,
+        inv_description: req.body.inv_description,
+        inv_image: req.body.inv_image,
+        inv_thumbnail: req.body.inv_thumbnail,
+        inv_year: req.body.inv_year,
+        inv_price: req.body.inv_price,
+        inv_mileage: req.body.inv_mileage
+      });
+      
+  }
+  next();
+};
+
+
 module.exports = inventoryValidation;

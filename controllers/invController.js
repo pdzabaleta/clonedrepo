@@ -206,5 +206,100 @@ invCont.getInventoryJSON = async (req, res, next) => {
   }
 }
 
+/* ***************************************
+ * Render edit inventory view
+ * *************************************** */
+invCont.editInventoryView = async function (req, res, next) {
+  const inventory_id = parseInt(req.params.inventory_id)
+  let nav = await utilities.getNav()
+  const itemData = await invModel.getVehicleById(inventory_id)
+  const classificationSelect = await utilities.buildClassificationList(itemData.classification_id)
+  const itemName = `${itemData.inv_make} ${itemData.inv_model}`
+  res.render("./inventory/edit-inventory", {
+    title: "Edit " + itemName,
+    nav,
+    classificationSelect: classificationSelect,
+    errors: null,
+    inventory_id: itemData.inventory_id,
+    inv_make: itemData.inv_make,
+    inv_model: itemData.inv_model,
+    inv_year: itemData.inv_year,
+    inv_description: itemData.inv_description,
+    inv_image: itemData.inv_image,
+    inv_thumbnail: itemData.inv_thumbnail,
+    inv_price: itemData.inv_price,
+    inv_mileage: itemData.inv_mileage,
+    classification_id: itemData.classification_id
+  })
+}
+
+/* ***************************
+ *  Handle EDIT Inventory POST Request
+ * *************************** */
+invCont.updateInventory = async (req, res, next) => {
+  try {
+    let nav = await utilities.getNav();
+
+    // Destructure form data from the request body
+    const {
+      inventory_id,
+      inv_make,
+      inv_model,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      classification_id,
+      inv_year,
+      inv_price,
+      inv_mileage
+    } = req.body;
+
+    // Construir el objeto del nuevo vehículo, convirtiendo a número los campos numéricos:
+    const updateVehicle = {
+      inventory_id,
+      inv_make,
+      inv_model,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      classification_id: Number(classification_id),
+      inv_year: Number(inv_year),
+      inv_price: Number(inv_price),
+      inv_mileage: Number(inv_mileage)
+    };
+
+    // Insertar el vehículo en la base de datos
+    const updateResult = await invModel.updateInventory(updateVehicle);
+
+    if (updateResult) {
+      const itemName = updateResult.inv_make + " " + updateResult.inv_model
+      req.flash("success", `The ${itemName} was successfully updated.`)
+      return res.redirect("/inv");
+    } else {
+      req.flash("error", "Failed to add the vehicle. Please try again.");
+      let classificationSelect = await utilities.buildClassificationList(classification_id);
+      const itemName = `${inv_make} ${inv_model}`
+      return res.status(501).render("inventory/edit-inventory", {
+        title: "Edit " + itemName,
+        nav,
+        classificationSelect,
+        errors: [],
+        flashMessage: req.flash("error"),
+        inventory_id,
+        inv_make,
+        inv_model,
+        inv_description,
+        inv_image,
+        inv_thumbnail,
+        inv_year,
+        inv_price,
+        inv_mileage
+      });
+    }
+  } catch (error) {
+    console.error("Error adding vehicle:", error);
+    next(error);
+  }
+};
 
 module.exports = invCont;

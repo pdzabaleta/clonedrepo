@@ -1,0 +1,134 @@
+<h1 class="inventory-header">Modifying Vehicle</h1>
+
+<!-- Flash message -->
+<%- messages() %>
+
+<!-- modifying Inventory Form -->
+<form 
+  id="updateForm" 
+  action="/inv/update"
+  class="inventory-add-form" 
+  method="POST"
+>
+  <!-- Make -->
+  <div class="form-group">
+    <label for="inv_make">Make</label>
+    <input
+      type="text"
+      name="inv_make"
+      id="inv_make"
+      class="form-control"
+      required
+      value="<%= typeof inv_make !== 'undefined' ? inv_make : '' %>"
+    />
+  </div>
+
+  <!-- Model -->
+  <div class="form-group">
+    <label for="inv_model">Model</label>
+    <input
+      type="text"
+      name="inv_model"
+      id="inv_model"
+      class="form-control"
+      required
+      value="<%= typeof inv_model !== 'undefined' ? inv_model : '' %>"
+    />
+  </div>
+
+  <!-- Description -->
+  <div class="form-group">
+    <label for="inv_description">Description</label>
+    <textarea
+      name="inv_description"
+      id="inv_description"
+      class="form-control"
+      required
+    ><%= typeof inv_description !== 'undefined' ? inv_description : '' %></textarea>
+  </div>
+
+  <!-- Image URL -->
+  <div class="form-group">
+    <label for="inv_image">Image URL</label>
+    <input
+      type="text"
+      name="inv_image"
+      id="inv_image"
+      class="form-control"
+      required
+      value="<%= typeof inv_image !== 'undefined' ? inv_image : '/images/vehicles/no-image.png' %>"
+    />
+  </div>
+
+  <!-- Thumbnail URL -->
+  <div class="form-group">
+    <label for="inv_thumbnail">Thumbnail URL</label>
+    <input
+      type="text"
+      name="inv_thumbnail"
+      id="inv_thumbnail"
+      class="form-control"
+      required
+      value="<%= typeof inv_thumbnail !== 'undefined' ? inv_thumbnail : '/images/vehicles/no-image_tn.png' %>"
+    />
+  </div>
+
+  <!-- Year -->
+  <div class="form-group">
+    <label for="inv_year">Year</label>
+    <input
+      type="number"
+      name="inv_year"
+      id="inv_year"
+      class="form-control"
+      required
+      min="1886"
+      max="2100"
+      value="<%= typeof inv_year !== 'undefined' ? inv_year : '' %>"
+    />
+  </div>
+
+  <!-- Price -->
+  <div class="form-group">
+    <label for="inv_price">Price</label>
+    <input
+      type="number"
+      name="inv_price"
+      id="inv_price"
+      class="form-control"
+      required
+      min="0"
+      step="0.01"
+      value="<%= typeof inv_price !== 'undefined' ? inv_price : '' %>"
+    />
+  </div>
+
+  <!-- Mileage -->
+  <div class="form-group">
+    <label for="inv_mileage">Mileage</label>
+    <input
+      type="number"
+      name="inv_mileage"
+      id="inv_mileage"
+      class="form-control"
+      required
+      min="0"
+      value="<%= typeof inv_mileage !== 'undefined' ? inv_mileage : '' %>"
+    />
+  </div>
+
+  <!-- Classification -->
+  <div class="form-group">
+    <label for="classification_id">Classification</label>
+    <!-- The classification list is injected by the controller using the utility function -->
+    <%- classificationSelect %>
+
+  </div>
+
+  <button type="submit" class="btn btn-primary" disabled>Modify Vehicle</button>
+  <input type="hidden" name="inventory_id"
+<% if(locals.inventory_id) { %> value="<%= locals.inventory_id %>"
+<% } %>>
+</form>
+<script src="/js/inv-update.js"></script>
+

@@ -24,13 +24,15 @@ router.post("/add-classification", validate.classificationRules(), validate.chec
 router.get("/add-inventory",  utilities.handleErrors(invController.showAddInventoryForm));
 
 // Route to process the add inventory form submission
-router.post(
-    "/add-inventory",
-    inventoryValidation.inventoryRules(),
-    inventoryValidation.checkInventoryData,
-    utilities.handleErrors(invController.addInventory)
-  );
+router.post("/add-inventory", inventoryValidation.inventoryRules(), inventoryValidation.checkInventoryData, utilities.handleErrors(invController.addInventory));
+
 // route for vehicle modification
-  router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
-  
+router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON));
+
+// Route to edit an inventory item
+router.get("/edit/:inventory_id", utilities.handleErrors(invController.editInventoryView));
+
+// Route to process the edit inventory form submission
+router.post("/update", inventoryValidation.inventoryRules(), inventoryValidation.checkUpdateData, utilities.handleErrors(invController.updateInventory));
+
 module.exports = router;

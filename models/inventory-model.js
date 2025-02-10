@@ -107,11 +107,51 @@ async function addVehicle(vehicle) {
   }
 }
 
+/* ***************************************
+ * Update vehicle data in the inventory table
+ ***************************************/
+async function updateInventory(vehicle) {
+  try {
+    const sql = `
+      UPDATE public.inventory SET 
+        inv_make = $1, 
+        inv_model = $2, 
+        inv_description = $3, 
+        inv_image = $4, 
+        inv_thumbnail = $5, 
+        classification_id = $6, 
+        inv_year = $7, 
+        inv_price = $8, 
+        inv_mileage = $9
+      WHERE inventory_id = $10
+      RETURNING *;
+    `;
+    const params = [
+      vehicle.inv_make,
+      vehicle.inv_model,
+      vehicle.inv_description,
+      vehicle.inv_image,
+      vehicle.inv_thumbnail,
+      vehicle.classification_id,
+      vehicle.inv_year,
+      vehicle.inv_price,
+      vehicle.inv_mileage,
+      vehicle.inventory_id // ID va al final porque es parte del WHERE
+    ];
+    const result = await pool.query(sql, params);
+    return result.rows[0]; // Retorna el vehículo actualizado
+  } catch (error) {
+    console.error("Error updating vehicle:", error);
+    throw error;
+  }
+}
+
 module.exports = {
   getClassifications,
   addClassification,
   checkExistingClassification,
   getInventoryByClassificationId,
   getVehicleById,
-  addVehicle
+  addVehicle,
+  updateInventory
 };

@@ -573,6 +573,13 @@ Hide message when clicking close
   background-color: #0056b3;
 }
 
+/* Estilo para el botón deshabilitado */
+.inventory-add-form .btn:disabled {
+  background-color: #cccccc; /* Color gris claro para el botón deshabilitado */
+  color: #666666; /* Color gris oscuro para el texto del botón deshabilitado */
+  cursor: not-allowed; /* Cursor de no permitido */
+}
+
 /* Optional: Style the select element (if not already styled by .form-control) */
 .inventory-add-form select {
   padding: 8px 10px;
