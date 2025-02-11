@@ -17,4 +17,9 @@ router.post("/login", regValidate.loginRules(), regValidate.checkLoginData, util
 // Account management view after login
 router.get("/", utilities.checkLogin ,utilities.handleErrors(accountController.accountManagementView));
 
+router.get('/logout', (req, res) => {
+  res.clearCookie('jwt');
+  res.redirect('/account/login');
+});
+
 module.exports = router;

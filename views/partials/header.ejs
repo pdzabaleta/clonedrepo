@@ -1,7 +1,19 @@
 <header>
   <div class="logo">
       <h1>CSE Motors</h1>
-  <a href="/account/login" class="account-link">My Account</a>
+      <div>
+        <ul class="nav-list">
+          <% if (loggedIn) { %>
+            <!-- Cuando el usuario está logueado, se muestra el enlace de bienvenida y el de logout -->
+            <li><a href="/account" class="account-link">Welcome Basic</a></li>
+            <li><a href="/account/logout" class="account-link">Logout</a></li>
+          <% } else { %>
+            <!-- Si no está logueado, se muestra "My Account" -->
+            <li><a href="/account/login">My Account</a></li>
+          <% } %>
+        </ul>
+      </div>
+      <!-- <a href="/account/login" class="account-link">My Account</a> -->
 </div>
   <%- include('../partials/navigation') %>
 </header>

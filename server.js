@@ -7,6 +7,8 @@ const bodyParser = require("body-parser");
 const pool = require("./database/");
 const utilities = require("./utilities/"); // Ensure utilities are required
 const cookieParser = require("cookie-parser");
+const jwt = require('jsonwebtoken');
+
 
 // Routes
 const static = require("./routes/static");
@@ -59,6 +61,28 @@ app.use(cookieParser())
 
 // JWT Cookies middleware
 app.use(utilities.checkJWTToken)
+
+// Middleware para revisar el JWT en cada petición y establecer loggedIn
+app.use((req, res, next) => {
+  const token = req.cookies.jwt;
+  if (token) {
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+      if (err) {
+        res.locals.loggedIn = false;
+      } else {
+        res.locals.loggedIn = true;
+        // Opcional: guarda los datos del usuario para usarlos en la vista
+        res.locals.user = decoded;
+      }
+      next();
+    });
+  } else {
+    res.locals.loggedIn = false;
+    next();
+  }
+});
+
+
 
 // ****************************
 // Routes Setup
