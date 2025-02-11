@@ -3,9 +3,9 @@
       <h1>CSE Motors</h1>
       <div>
         <ul class="nav-list">
-          <% if (loggedIn) { %>
-            <!-- Cuando el usuario está logueado, se muestra el enlace de bienvenida y el de logout -->
-            <li><a href="/account" class="account-link">Welcome Basic</a></li>
+          <% if (loggedIn && user) { %>
+            <!-- Cuando el usuario está logueado, se muestra el saludo con su primer nombre y el enlace de logout -->
+            <li><a href="/account" class="account-link">Welcome <%= user.first_name %></a></li>
             <li><a href="/account/logout" class="account-link">Logout</a></li>
           <% } else { %>
             <!-- Si no está logueado, se muestra "My Account" -->
@@ -14,6 +14,6 @@
         </ul>
       </div>
       <!-- <a href="/account/login" class="account-link">My Account</a> -->
-</div>
+  </div>
   <%- include('../partials/navigation') %>
 </header>

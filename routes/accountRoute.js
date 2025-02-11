@@ -22,4 +22,8 @@ router.get('/logout', (req, res) => {
   res.redirect('/account/login');
 });
 
+router.get("/update/:account_id", utilities.handleErrors(accountController.buildUpdateAccountView));
+router.post("/update", regValidate.updateAccountRules(), regValidate.checkUpdateAccountData, utilities.handleErrors(accountController.updateAccount));
+router.post("/update-password", regValidate.changePasswordRules(), regValidate.checkChangePasswordData, utilities.handleErrors(accountController.changePassword));
+
 module.exports = router;

@@ -1,4 +1,27 @@
-<h1>Account Management</h1>
-<!-- Flash messages -->
-<%- messages() %>
-<p>You're logged in</p>
+<div class="account-management">
+    <h1 class="account-management__title">Account Management</h1>
+    
+    <!-- Flash messages -->
+    <div class="account-management__flash">
+      <%- messages() %>
+    </div>
+    
+    <!-- Saludo personalizado usando el primer nombre -->
+    <h2 class="account-management__greeting">Welcome <%= account_firstname %></h2>
+    
+    <!-- Enlace para actualizar la información de la cuenta, siempre presente -->
+    <p class="account-management__update-link">
+      <a href="/account/update/<%= account_id %>">Update Account Information</a>
+    </p>
+    
+    <% if (account_type === "Employee" || account_type === "Admin") { %>
+      <!-- Solo se renderiza para empleados o administradores -->
+      <div class="account-management__inventory">
+        <h3 class="account-management__inventory-title">Inventory Management</h3>
+        <p class="account-management__inventory-link">
+          <a href="/inv">Access Inventory Management</a>
+        </p>
+      </div>
+    <% } %>
+  </div>
+  

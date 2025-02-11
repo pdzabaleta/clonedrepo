@@ -753,6 +753,205 @@ noscript {
   font-weight: bold;
 }
 
+/* Contenedor principal */
+.account-management {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  color: #333;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/* Título principal */
+.account-management__title {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #2c3e50;
+}
+
+/* Sección de mensajes flash */
+.account-management__flash {
+  margin-bottom: 20px;
+}
+
+/* Saludo personalizado */
+.account-management__greeting {
+  font-size: 1.75rem;
+  margin-bottom: 15px;
+  text-align: center;
+  color: #34495e;
+}
+
+/* Enlace para actualizar cuenta */
+.account-management__update-link {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.account-management__update-link a {
+  display: inline-block;
+  background-color: #3498db;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.account-management__update-link a:hover {
+  background-color: #2980b9;
+}
+
+/* Sección exclusiva para inventario (solo para empleados/administradores) */
+.account-management__inventory {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.account-management__inventory-title {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #2c3e50;
+}
+
+.account-management__inventory-link a {
+  display: inline-block;
+  background-color: #27ae60;
+  color: #fff;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.account-management__inventory-link a:hover {
+  background-color: #1e8449;
+}
+
+/* Contenedor principal de la vista de actualización */
+.account-update-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  color: #333;
+}
+
+/* Título principal */
+.account-update__title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+/* Contenedor para los mensajes flash */
+.account-update__messages {
+  margin-bottom: 20px;
+}
+
+/* Títulos de sección para formularios */
+.account-update__section-title {
+  font-size: 1.5rem;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  color: #34495e;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 5px;
+}
+
+/* Formularios */
+.account-update__form {
+  margin-bottom: 30px;
+}
+
+/* Estilo para cada grupo de campos */
+.form-group {
+  margin-bottom: 15px;
+}
+
+/* Etiquetas */
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+/* Entradas de formulario */
+.form-control {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Enfoque en inputs */
+.form-control:focus {
+  border-color: #3498db;
+  outline: none;
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+/* Botones */
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.btn-primary {
+  background-color: #3498db;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: #2980b9;
+}
+
+.btn-secondary {
+  background-color: #27ae60;
+  color: #fff;
+}
+
+.btn-secondary:hover {
+  background-color: #1e8449;
+}
+
+/* Estilo para el pequeño texto de ayuda en el formulario */
+.form-text {
+  display: block;
+  margin-top: 5px;
+  font-size: 0.875rem;
+  color: #7f8c8d;
+}
+#accountUpdateButton[disabled],
+#passwordUpdateButton[disabled] {
+  background-color: #ccc; /* Fondo gris */
+  color: #666;            /* Texto en gris */
+  cursor: not-allowed;    /* Cursor de no permitido */
+  opacity: 0.6;           /* Baja opacidad para efecto deshabilitado */
+}
+
 /* .alert {
   margin-top: 20px;
   padding: 10px;

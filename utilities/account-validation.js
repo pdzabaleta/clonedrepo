@@ -138,6 +138,54 @@ validate.authorizeAdminEmployee = async (req, res, next) => {
   });
 }
 
+// Reglas para actualizar la cuenta (nombre, apellido, email)
+validate.updateAccountRules = () => [
+  body("account_firstname").trim().notEmpty().withMessage("First name is required."),
+  body("account_lastname").trim().notEmpty().withMessage("Last name is required."),
+  body("account_email").isEmail().withMessage("A valid email is required.").normalizeEmail()
+];
 
+validate.checkUpdateAccountData = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    let nav = await require("../utilities/").getNav(req, res);
+    return res.status(400).render("account/account-update", {
+      title: "Update Account Information",
+      nav,
+      account: req.body,
+      errors: errors.array()
+    });
+  }
+  next();
+};
+
+// Reglas para cambiar la contraseña
+validate.changePasswordRules = () => [
+  body("new_password")
+    .isLength({ min: 12 })
+    .withMessage("Password must be at least 12 characters.")
+    .matches(/[a-z]/)
+    .withMessage("Password must contain at least one lowercase letter.")
+    .matches(/[A-Z]/)
+    .withMessage("Password must contain at least one uppercase letter.")
+    .matches(/\d/)
+    .withMessage("Password must contain at least one number.")
+    .matches(/[\W_]/)
+    .withMessage("Password must contain at least one symbol.")
+];
+
+validate.checkChangePasswordData = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    let nav = await require("../utilities/").getNav(req, res);
+    return res.status(400).render("account/account-update", {
+      title: "Update Account Information",
+      nav,
+      account: req.body,
+      errors: errors.array()
+    });
+  }
+  next();
+};
 
   module.exports = validate

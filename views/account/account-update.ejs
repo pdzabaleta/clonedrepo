@@ -1,0 +1,45 @@
+<div class="account-update-container">
+    <h1 class="account-update__title"><%= title %></h1>
+    
+    <!-- Flash messages -->
+    <div class="account-update__messages">
+      <%- messages() %>
+    </div>
+    
+    <!-- Formulario para actualizar información de la cuenta -->
+    <h2 class="account-update__section-title">Account Update</h2>
+    <form id="accountUpdateForm" action="/account/update" method="POST" class="account-update__form">
+      <!-- Campo oculto con el account_id -->
+      <input type="hidden" name="account_id" value="<%= account.account_id %>">
+      
+      <div class="form-group">
+        <label for="account_firstname">First Name:</label>
+        <input type="text" id="account_firstname" name="account_firstname" class="form-control" value="<%= account.first_name %>" required>
+      </div>
+      <div class="form-group">
+        <label for="account_lastname">Last Name:</label>
+        <input type="text" id="account_lastname" name="account_lastname" class="form-control" value="<%= account.last_name %>" required>
+      </div>
+      <div class="form-group">
+        <label for="account_email">Email:</label>
+        <input type="email" id="account_email" name="account_email" class="form-control" value="<%= account.email %>" required>
+      </div>
+      <button type="submit" id="accountUpdateButton" class="btn btn-primary account-update__submit" disabled>Update Account</button>
+    </form>
+    
+    <!-- Formulario para cambiar la contraseña -->
+    <h2 class="account-update__section-title">Change Password</h2>
+    <form id="passwordUpdateForm" action="/account/update-password" method="POST" class="account-update__form">
+      <!-- Campo oculto con el account_id -->
+      <input type="hidden" name="account_id" value="<%= account.account_id %>">
+      <div class="form-group">
+        <label for="new_password">New Password:</label>
+        <input type="password" id="new_password" name="new_password" class="form-control" placeholder="Enter new password" required>
+        <small class="form-text">Password must be at least 12 characters with uppercase, lowercase, numbers, and symbols.</small>
+      </div>
+      <button type="submit" id="passwordUpdateButton" class="btn btn-secondary account-update__submit" disabled>Change Password</button>
+    </form>
+  </div>
+  <script src="/js/account-update.js"></script>
+  <noscript>JavaScript must be enabled to use this page.</noscript>
+    
