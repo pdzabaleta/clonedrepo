@@ -34,7 +34,7 @@ validate.checkClassificationData = async (req, res, next) => {
   const classificationExists = await invModel.checkExistingClassification(classification_name);
   if (classificationExists) {
     req.flash('error', 'This classification already exists. Please choose a different name.');
-    let nav = await utilities.getNav();
+    let nav = await utilities.getNav(req, res);
     return res.render("inventory/add-classification", {
       title: "Add New Classification",
       nav,
@@ -45,7 +45,7 @@ validate.checkClassificationData = async (req, res, next) => {
   // Si hay errores de validación, muestra el mensaje y re-renderiza
   if (!errors.isEmpty()) {
     req.flash('error', 'Please fix the errors above.');
-    let nav = await utilities.getNav();
+    let nav = await utilities.getNav(req, res);
     return res.render("inventory/add-classification", {
       errors,
       title: "Add New Classification",

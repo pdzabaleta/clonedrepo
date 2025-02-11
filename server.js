@@ -84,6 +84,7 @@ app.use((req, res, next) => {
 
 
 
+
 // ****************************
 // Routes Setup
 // ****************************
@@ -107,7 +108,7 @@ app.use(async (req, res, next) => {
 // Express Error Handler
 // ****************************
 app.use(async (err, req, res, next) => {
-  let nav = await utilities.getNav();
+  let nav = await utilities.getNav(req, res);
   console.error(`Error at: "${req.originalUrl}": ${err.message}`);
   
   let message = err.status === 404 ? err.message : "Oh no! There was a crash. Maybe try a different route?";

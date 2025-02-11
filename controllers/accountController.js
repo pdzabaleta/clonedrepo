@@ -8,7 +8,7 @@ require("dotenv").config()
 *  Deliver login view
 * *************************************** */
 async function buildLoginView(req, res, next) {
-    let nav = await utilities.getNav()
+    let nav = await utilities.getNav(req, res)
     res.render("account/login", {
       title: "Login",
       nav,
@@ -19,7 +19,7 @@ async function buildLoginView(req, res, next) {
 *  Process Login
 * *************************************** */
 async function processLogin(req, res) {
-  let nav = await utilities.getNav()
+  let nav = await utilities.getNav(req, res)
   const { account_email, account_password } = req.body
 
   const loginResult = await accountModel.checkLogin(account_email, account_password)
@@ -41,7 +41,7 @@ async function processLogin(req, res) {
 *  Deliver registration view
 * *************************************** */
 async function buildRegisterView(req, res, next) {
-  let nav = await utilities.getNav()
+  let nav = await utilities.getNav(req, res)
   res.render("account/register", {
     title: "Register",
     nav,
@@ -53,7 +53,7 @@ async function buildRegisterView(req, res, next) {
 *  Process Registration
 * *************************************** */
 async function registerAccount(req, res) {
-  let nav = await utilities.getNav()
+  let nav = await utilities.getNav(req, res)
   const { account_firstname, account_lastname, account_email, account_password } = req.body
 
   // Hash the password before storing
@@ -102,7 +102,7 @@ async function registerAccount(req, res) {
  *  Process login request
  * ************************************ */
 async function accountLogin(req, res) {
-  let nav = await utilities.getNav()
+  let nav = await utilities.getNav(req, res)
   const { account_email, account_password } = req.body
   const accountData = await accountModel.getAccountByEmail(account_email)
   if (!accountData) {
@@ -118,6 +118,7 @@ async function accountLogin(req, res) {
   try {
     if (await bcrypt.compare(account_password, accountData.password)) {
       delete accountData.password
+      accountData.accountType = accountData.account_type; 
       const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
       if(process.env.NODE_ENV === 'development') {
         res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
@@ -141,7 +142,7 @@ async function accountLogin(req, res) {
 }
 
 async function accountManagementView(req, res) {
-  let nav = await utilities.getNav();
+  let nav = await utilities.getNav(req, res);
   res.render("account/account", {
       title: "Account Management",
       nav,

@@ -1,6 +1,7 @@
 const utilities = require(".")
   const { body, validationResult } = require("express-validator")
   const accountModel = require("../models/account-model")
+  const jwt = require('jsonwebtoken');
   const validate = {}
 
 /*  **********************************
@@ -61,7 +62,7 @@ validate.checkRegData = async (req, res, next) => {
     let errors = []
     errors = validationResult(req)
     if (!errors.isEmpty()) {
-      let nav = await utilities.getNav()
+      let nav = await utilities.getNav(req, res)
       res.render("account/register", {
         errors,
         title: "Registration",
@@ -99,7 +100,7 @@ validate.checkLoginData = async (req, res, next) => {
   // console.log("Validation Errors:", errors.array());
 
   if (!errors.isEmpty()) {
-    let nav = await utilities.getNav()
+    let nav = await utilities.getNav(req, res)
     req.flash("error", "Login failed. Please check the form and try again.")
     return res.status(400).render("account/login", {
       title: "Login",
@@ -112,4 +113,31 @@ validate.checkLoginData = async (req, res, next) => {
 }
 
   
+// Middleware para autorizar solo a usuarios con account_type "Employee" o "Admin"
+validate.authorizeAdminEmployee = async (req, res, next) => {
+  const token = req.cookies.jwt; // Se asume que el token está en la cookie "jwt"
+  
+  if (!token) {
+    req.flash("error", "You must be logged in to access this page.");
+    return res.redirect("/account/login");
+  }
+  
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+    if (err) {
+      req.flash("error", "Invalid or expired token. Please log in again.");
+      return res.redirect("/account/login");
+    }
+    
+    // Usamos el campo account_type (tal como lo guarda la base de datos)
+    if (decoded.account_type === "Employee" || decoded.account_type === "Admin") {
+      return next();
+    } else {
+      req.flash("error", "You do not have permission to access this page.");
+      return res.redirect("/account/login");
+    }
+  });
+}
+
+
+
   module.exports = validate

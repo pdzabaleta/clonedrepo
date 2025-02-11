@@ -40,23 +40,38 @@ Util.buildClassificationGrid = async function(data) {
 /* ************************
  * Constructs the nav HTML unordered list
  ************************** */
-Util.getNav = async function (req, res, next) {
+Util.getNav = async function (req, res) {
+  // Obtiene las clasificaciones (esto lo hace siempre, pero podrías hacerlo solo si es necesario)
   let data = await invModel.getClassifications();
   let list = "<ul>";
+  
+  // Siempre se muestra el link de Home
   list += '<li><a href="/" title="Home page">Home</a></li>';
-  list += '<li><a href="/inv/" title="Classification page">Classification</a></li>';
-  data.rows.forEach((row) => {
-    list += "<li>";
-    list +=
-      '<a href="/inv/type/' +
-      row.classification_id +
-      '" title="See our inventory of ' +
-      row.classification_name +
-      ' vehicles">' +
-      row.classification_name +
-      "</a>";
-    list += "</li>";
-  });
+  
+  // Si el usuario está logueado y tiene permisos (account_type "Employee" o "Admin"), muestra el enlace Classification
+  if (
+    res.locals.loggedIn &&
+    res.locals.user &&
+    (res.locals.user.account_type === "Employee" || res.locals.user.account_type === "Admin")
+  ) {
+    list += '<li><a href="/inv/" title="Classification page">Classification</a></li>';
+    
+  
+  }
+    // Agrega los links de cada clasificación
+    data.rows.forEach((row) => {
+      list += "<li>";
+      list +=
+        '<a href="/inv/type/' +
+        row.classification_id +
+        '" title="See our inventory of ' +
+        row.classification_name +
+        ' vehicles">' +
+        row.classification_name +
+        "</a>";
+      list += "</li>";
+    });
+  
   list += "</ul>";
   return list;
 };

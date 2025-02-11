@@ -60,7 +60,7 @@ inventoryValidation.checkInventoryData = async (req, res, next) => {
     // Unir todos los mensajes de error en una cadena
     const errorMsgs = "<ul>" + errors.array().map(e => `<li>${e.msg}</li>`).join("") + "</ul>";
     req.flash("error", errorMsgs);
-    let nav = await utilities.getNav();
+    let nav = await utilities.getNav(req, res);
     let classificationList = await utilities.buildClassificationList(req.body.classification_id);
     return res.status(400).render("inventory/add-inventory", {
         title: "Add New Vehicle",
@@ -90,7 +90,7 @@ inventoryValidation.checkUpdateData = async (req, res, next) => {
     // Unir todos los mensajes de error en una cadena
     const errorMsgs = "<ul>" + errors.array().map(e => `<li>${e.msg}</li>`).join("") + "</ul>";
     req.flash("error", errorMsgs);
-    let nav = await utilities.getNav();
+    let nav = await utilities.getNav(req, res);
     let classificationSelect = await utilities.buildClassificationList(req.body.classification_id);
     return res.status(400).render("inventory/edit-inventory", {
         title: "Modify New Vehicle",
@@ -121,7 +121,7 @@ inventoryValidation.checkDeleteData = async (req, res, next) => {
     // Unir todos los mensajes de error en una cadena
     const errorMsgs = "<ul>" + errors.array().map(e => `<li>${e.msg}</li>`).join("") + "</ul>";
     req.flash("error", errorMsgs);
-    let nav = await utilities.getNav();
+    let nav = await utilities.getNav(req, res);
     let classificationSelect = await utilities.buildClassificationList(req.body.classification_id);
     return res.status(400).render("inventory/delete-confirm", {
         title: "Delete Vehicle", // Título para la vista de eliminación

@@ -1,44 +1,67 @@
 const express = require("express");
 const router = express.Router();
-const utilities = require("../utilities/"); // Requerido para 'handleErrors' y 'getNav'
+const utilities = require("../utilities/"); // Ahora incluye authorizeAdminEmployee
 const invController = require("../controllers/invController");
-const validate = require("../utilities/classificationValidation"); // Requerido para las validaciones
+const validate = require("../utilities/classificationValidation"); // Validaciones para clasificación
 const inventoryValidation = require("../utilities/inventoryValidation");
+const regValidate = require('../utilities/account-validation')
 
-// Route to build inventory by classification view
+// ===========================
+// RUTAS PÚBLICAS (accesibles sin estar logueado)
+// ===========================
+
+// Construir inventario por clasificación
 router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId));
 
-// route to get vehicle details
+// Obtener detalles de un vehículo
 router.get("/vehicle/:inventoryId", utilities.handleErrors(invController.getVehicleDetails));
 
-// route for inventory management
-router.get("/", utilities.handleErrors(invController.showManagementView));
-
-// Route to show the add classification form
-router.get("/add-classification", utilities.handleErrors(invController.showAddClassificationForm));
-
-// route for classification 
-router.post("/add-classification", validate.classificationRules(), validate.checkClassificationData, utilities.handleErrors(invController.addClassification));
-
-// Route to display the add inventory form
-router.get("/add-inventory",  utilities.handleErrors(invController.showAddInventoryForm));
-
-// Route to process the add inventory form submission
-router.post("/add-inventory", inventoryValidation.inventoryRules(), inventoryValidation.checkInventoryData, utilities.handleErrors(invController.addInventory));
-
-// route for vehicle modification
+// Obtener inventario en formato JSON (pública)
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON));
 
-// Route to edit an inventory item
-router.get("/edit/:inventory_id", utilities.handleErrors(invController.editInventoryView));
+// ===========================
+// RUTAS ADMINISTRATIVAS (protegidas)
+// Estas rutas solo deben ser accesibles a usuarios con account_type "Employee" o "Admin"
+// Se protege usando utilities.authorizeAdminEmployee
+// ===========================
 
-// Route to process the edit inventory form submission
-router.post("/update", inventoryValidation.inventoryRules(), inventoryValidation.checkUpdateData, utilities.handleErrors(invController.updateInventory));
+// Vista de gestión del inventario (no debe ser accesible públicamente)
+router.get("/", regValidate.authorizeAdminEmployee, utilities.handleErrors(invController.showManagementView));
 
-// route to display the delete confirmation view.
-router.get("/delete/:inventory_id", utilities.handleErrors(invController.deleteInventoryView));
+// Agregar clasificación
+router.get("/add-classification", regValidate.authorizeAdminEmployee, utilities.handleErrors(invController.showAddClassificationForm));
+router.post("/add-classification", 
+    regValidate.authorizeAdminEmployee, 
+  validate.classificationRules(), 
+  validate.checkClassificationData, 
+  utilities.handleErrors(invController.addClassification)
+);
 
-// route to process the deletion of an inventory item.
-router.post("/delete", inventoryValidation.deleteRules(), inventoryValidation.checkDeleteData, utilities.handleErrors(invController.deleteInventory));
+// Agregar inventario
+router.get("/add-inventory", regValidate.authorizeAdminEmployee, utilities.handleErrors(invController.showAddInventoryForm));
+router.post("/add-inventory", 
+    regValidate.authorizeAdminEmployee, 
+  inventoryValidation.inventoryRules(), 
+  inventoryValidation.checkInventoryData, 
+  utilities.handleErrors(invController.addInventory)
+);
+
+// Editar inventario
+router.get("/edit/:inventory_id", regValidate.authorizeAdminEmployee, utilities.handleErrors(invController.editInventoryView));
+router.post("/update", 
+    regValidate.authorizeAdminEmployee, 
+  inventoryValidation.inventoryRules(), 
+  inventoryValidation.checkUpdateData, 
+  utilities.handleErrors(invController.updateInventory)
+);
+
+// Eliminar inventario
+router.get("/delete/:inventory_id", regValidate.authorizeAdminEmployee, utilities.handleErrors(invController.deleteInventoryView));
+router.post("/delete", 
+    regValidate.authorizeAdminEmployee, 
+  inventoryValidation.deleteRules(), 
+  inventoryValidation.checkDeleteData, 
+  utilities.handleErrors(invController.deleteInventory)
+);
 
 module.exports = router;

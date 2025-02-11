@@ -10,7 +10,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
   const classification_id = req.params.classificationId;
   const data = await invModel.getInventoryByClassificationId(classification_id);
   const grid = await utilities.buildClassificationGrid(data);
-  let nav = await utilities.getNav();
+  let nav = await utilities.getNav(req, res);
   const className = data[0].classification_name;
   res.render("./inventory/classification", {
     title: className + " vehicles",
@@ -24,7 +24,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
  * ************************** */
 invCont.getVehicleDetails = async function (req, res, next) {
   const { inventoryId } = req.params; // Get the vehicle ID from the URL
-  let nav = await utilities.getNav();
+  let nav = await utilities.getNav(req, res);
 
   try {
     // Fetch vehicle details from the model
@@ -56,7 +56,7 @@ The key is the line res.render("inventory/management", {...}),
 which tells Express to use the management.ejs view inside the views/inventory/ folder.
  * ************************** */
 invCont.showManagementView = async (req, res) => {
-  let nav = await utilities.getNav(); 
+  let nav = await utilities.getNav(req, res); 
   const classificationSelect = await utilities.buildClassificationList()
   res.render("inventory/management", {
     title: "Inventory Management",
@@ -70,7 +70,7 @@ invCont.showManagementView = async (req, res) => {
  *  Add Classification - Show Form
  * ************************** */
 invCont.showAddClassificationForm = async (req, res) => {
-  let nav = await utilities.getNav(); 
+  let nav = await utilities.getNav(req, res); 
   res.render("inventory/add-classification", {
     title: "Add New Classification",
     nav,
@@ -104,7 +104,7 @@ invCont.addClassification = async (req, res, next) => {
  * *************************** */
 invCont.showAddInventoryForm = async (req, res, next) => {
   try {
-    let nav = await utilities.getNav();
+    let nav = await utilities.getNav(req, res);
     // Build the classification list (the <select> element) from the utility
     const classificationList = await utilities.buildClassificationList();
     res.render("inventory/add-inventory", {
@@ -134,7 +134,7 @@ invCont.showAddInventoryForm = async (req, res, next) => {
  * *************************** */
 invCont.addInventory = async (req, res, next) => {
   try {
-    let nav = await utilities.getNav();
+    let nav = await utilities.getNav(req, res);
 
     // Destructure form data from the request body
     const {
@@ -211,7 +211,7 @@ invCont.getInventoryJSON = async (req, res, next) => {
  * *************************************** */
 invCont.editInventoryView = async function (req, res, next) {
   const inventory_id = parseInt(req.params.inventory_id)
-  let nav = await utilities.getNav()
+  let nav = await utilities.getNav(req, res)
   const itemData = await invModel.getVehicleById(inventory_id)
   const classificationSelect = await utilities.buildClassificationList(itemData.classification_id)
   const itemName = `${itemData.inv_make} ${itemData.inv_model}`
@@ -238,7 +238,7 @@ invCont.editInventoryView = async function (req, res, next) {
  * *************************** */
 invCont.updateInventory = async (req, res, next) => {
   try {
-    let nav = await utilities.getNav();
+    let nav = await utilities.getNav(req, res);
 
     // Destructure form data from the request body
     const {
@@ -308,7 +308,7 @@ invCont.updateInventory = async (req, res, next) => {
 invCont.deleteInventoryView = async (req, res, next) => {
   try {
     const inventory_id = parseInt(req.params.inventory_id);
-    const nav = await utilities.getNav();
+    const nav = await utilities.getNav(req, res);
     const itemData = await invModel.getVehicleById(inventory_id);
     if (!itemData) {
       throw new Error("Vehicle not found");
