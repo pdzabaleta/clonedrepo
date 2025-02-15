@@ -41,7 +41,8 @@ invCont.getVehicleDetails = async function (req, res, next) {
     res.render('inventory/details', { 
       title: `${vehicle.inv_make} ${vehicle.inv_model}`,
       nav,
-      details // Pass the HTML for vehicle details
+      details, // Pass the HTML for vehicle details
+      vehicle
     });
 
   } catch (error) {

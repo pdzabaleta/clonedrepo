@@ -187,5 +187,13 @@ validate.checkChangePasswordData = async (req, res, next) => {
   }
   next();
 };
+validate.checkLogin = async (req, res, next) => {
+  if (res.locals.loggedIn) {
+    next();
+  } else {
+    req.flash("error", "You must be logged in to access this page.");
+    res.redirect("/account/login");
+  }
+}
 
   module.exports = validate

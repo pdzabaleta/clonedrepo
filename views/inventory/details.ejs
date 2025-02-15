@@ -1,3 +1,21 @@
+<!-- Flash messages -->
+<%- messages() %>
+
 <div>
   <%- details %>
 </div>
+
+
+
+<div class="wishlist-button-container">
+  <% if (loggedIn) { %>
+    <form action="/wishlist/add" method="POST">
+      <!-- Pasa el inventory_id del vehículo -->
+      <input type="hidden" name="inventory_id" value="<%= vehicle.inventory_id %>">
+      <button type="submit" class="btn btn-wishlist">Add to Wishlist</button>
+    </form>
+  <% } else { %>
+    <a href="/account/login" class="btn btn-wishlist" onclick="alert('Please log in to add items to your wishlist.')">Add to Wishlist</a>
+  <% } %>
+</div>
+

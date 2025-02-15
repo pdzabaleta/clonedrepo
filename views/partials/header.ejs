@@ -5,6 +5,7 @@
         <ul class="nav-list">
           <% if (loggedIn && user) { %>
             <!-- Cuando el usuario está logueado, se muestra el saludo con su primer nombre y el enlace de logout -->
+             <li><a href="/wishlist" class="wishlist-link">My Wishlist</a></li>
             <li><a href="/account" class="account-link">Welcome <%= user.first_name %></a></li>
             <li><a href="/account/logout" class="account-link">Logout</a></li>
           <% } else { %>

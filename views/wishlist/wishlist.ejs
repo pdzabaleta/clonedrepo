@@ -1,0 +1,26 @@
+
+<!-- Flash messages -->
+<%- messages() %>
+
+<h1><%= title %></h1>
+
+  
+  <% if (wishlist.length === 0) { %>
+    <p>Your wishlist is empty.</p>
+  <% } else { %>
+    <ul class="wishlist-list">
+      <% wishlist.forEach(function(vehicle) { %>
+        <li class="wishlist-item">
+          <h3><%= vehicle.inv_make %> <%= vehicle.inv_model %></h3>
+          <p>Year: <%= vehicle.inv_year %></p>
+          <p>Price: $<%= vehicle.inv_price %></p>
+          <p><a href="/inv/vehicle/<%= vehicle.inventory_id %>">View Details</a></p>
+          <!-- Formulario para remover el ítem de la wishlist -->
+          <form action="/wishlist/remove" method="POST">
+            <input type="hidden" name="inventory_id" value="<%= vehicle.inventory_id %>">
+            <button type="submit">Remove</button>
+          </form>
+        </li>
+      <% }) %>
+    </ul>
+  <% } %>

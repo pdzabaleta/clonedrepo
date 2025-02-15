@@ -16,6 +16,8 @@ const baseController = require("./controllers/baseController");
 const inventoryRoute = require("./routes/inventoryRoute");
 const errorRoute = require("./routes/errorRoute"); // Import error route
 const accountRoute = require("./routes/accountRoute");
+const wishlistRoute = require("./routes/wishlistRoute");
+
 
 const app = express();
 
@@ -96,6 +98,8 @@ app.get("/", utilities.handleErrors(baseController.buildHome));
 app.use("/inv", inventoryRoute);
 app.use("/", errorRoute); // Use the error route
 app.use("/account", accountRoute);
+app.use("/wishlist", wishlistRoute);
+
 
 // ****************************
 // 404 Not Found Middleware
