@@ -1,26 +1,27 @@
-
 <!-- Flash messages -->
 <%- messages() %>
 
 <h1><%= title %></h1>
 
-  
-  <% if (wishlist.length === 0) { %>
-    <p>Your wishlist is empty.</p>
-  <% } else { %>
-    <ul class="wishlist-list">
-      <% wishlist.forEach(function(vehicle) { %>
-        <li class="wishlist-item">
+<% if (wishlist.length === 0) { %>
+  <p class="wishlist-empty">Your wishlist is empty.</p>
+<% } else { %>
+  <ul class="wishlist-list">
+    <% wishlist.forEach(function(vehicle) { %>
+      <li class="wishlist-item">
+        <img src="<%= vehicle.inv_image %>" alt="<%= vehicle.inv_make %> <%= vehicle.inv_model %>" class="wishlist-image">
+        <div class="wishlist-details">
           <h3><%= vehicle.inv_make %> <%= vehicle.inv_model %></h3>
           <p>Year: <%= vehicle.inv_year %></p>
-          <p>Price: $<%= vehicle.inv_price %></p>
-          <p><a href="/inv/vehicle/<%= vehicle.inventory_id %>">View Details</a></p>
+          <p class="wishlist-price">Price: $<%= vehicle.inv_price %></p>
+          <p><a href="/inv/vehicle/<%= vehicle.inventory_id %>" class="wishlist-link">View Details</a></p>
           <!-- Formulario para remover el ítem de la wishlist -->
-          <form action="/wishlist/remove" method="POST">
+          <form action="/wishlist/remove" method="POST" class="wishlist-form">
             <input type="hidden" name="inventory_id" value="<%= vehicle.inventory_id %>">
-            <button type="submit">Remove</button>
+            <button type="submit" class="wishlist-remove">Remove</button>
           </form>
-        </li>
-      <% }) %>
-    </ul>
-  <% } %>
+        </div>
+      </li>
+    <% }) %>
+  </ul>
+<% } %>

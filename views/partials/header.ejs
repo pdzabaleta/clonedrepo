@@ -1,20 +1,17 @@
 <header>
-  <div class="logo">
-      <h1>CSE Motors</h1>
-      <div>
+  <div class="logo-container">
+      <h1 class="logo-title">CSE Motors</h1>
+      <div class="nav-wrapper">
         <ul class="nav-list">
           <% if (loggedIn && user) { %>
-            <!-- Cuando el usuario está logueado, se muestra el saludo con su primer nombre y el enlace de logout -->
-             <li><a href="/wishlist" class="wishlist-link">My Wishlist</a></li>
-            <li><a href="/account" class="account-link">Welcome <%= user.first_name %></a></li>
-            <li><a href="/account/logout" class="account-link">Logout</a></li>
+            <li class="nav-item"><a href="/wishlist" class="wishlist-link">My Wishlist</a></li>
+            <li class="nav-item"><a href="/account" class="account-link">Welcome <%= user.first_name %></a></li>
+            <li class="nav-item"><a href="/account/logout" class="logout-link">Logout</a></li>
           <% } else { %>
-            <!-- Si no está logueado, se muestra "My Account" -->
-            <li><a href="/account/login">My Account</a></li>
+            <li class="nav-item"><a href="/account/login" class="login-link">My Account</a></li>
           <% } %>
         </ul>
       </div>
-      <!-- <a href="/account/login" class="account-link">My Account</a> -->
   </div>
   <%- include('../partials/navigation') %>
 </header>

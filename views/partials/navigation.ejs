@@ -1,3 +1,27 @@
-<nav>
- <%- nav %>
-</nav>
+<nav class="navigation">
+    <!-- Botón hamburguesa -->
+    <button class="nav-toggle" aria-label="Open navigation">
+      <span class="hamburger"></span>
+    </button>
+  
+    <!-- Contenedor de enlaces de navegación -->
+    <div class="nav-links">
+      <%- nav %>
+    </div>
+  </nav>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const navToggle = document.querySelector(".nav-toggle")
+      const navLinks = document.querySelector(".nav-links")
+  
+      navToggle.addEventListener("click", () => {
+        // Alterna la clase que muestra/oculta el menú
+        navLinks.classList.toggle("nav-open")
+  
+        // Opcional: para animar la hamburguesa a "X"
+        navToggle.classList.toggle("active")
+      })
+    })
+  </script>
+  
+  

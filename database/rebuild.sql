@@ -41,3 +41,10 @@ INSERT INTO inventory (inv_make, inv_model, inv_description, inv_image, inv_thum
 -- Insert initial data into account
 INSERT INTO account (first_name, last_name, email, password, account_type) VALUES
 ('John', 'Doe', 'johndoe@byui.edu', '12345678', 'User');
+
+CREATE TABLE wishlist (
+  wishlist_id SERIAL PRIMARY KEY,
+  account_id INTEGER REFERENCES account(account_id) ON DELETE CASCADE,
+  inventory_id INTEGER REFERENCES inventory(inventory_id) ON DELETE CASCADE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
