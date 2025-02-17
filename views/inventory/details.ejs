@@ -1,3 +1,4 @@
+<!-- details.ejs -->
 <!-- Flash messages -->
 <%- messages() %>
 
@@ -5,17 +6,28 @@
   <%- details %>
 </div>
 
-
-
 <div class="wishlist-button-container">
   <% if (loggedIn) { %>
-    <form action="/wishlist/add" method="POST">
-      <!-- Pasa el inventory_id del vehículo -->
-      <input type="hidden" name="inventory_id" value="<%= vehicle.inventory_id %>">
+    <form action="/wishlist/add" method="POST" novalidate>
+<!-- Campo oculto no necesita estilo -->
+<input type="hidden" name="inventory_id" value="<%= vehicle.inventory_id %>">
+      
+<!-- Campo para la nota, visible para el usuario -->
+<label for="note" class="note-label">Note for wishlist (optional, maximum 100 characters):</label>
+<input 
+  type="text" 
+  id="note" 
+  name="note" 
+  maxlength="100" 
+  placeholder="Write a note to add to wishlist"
+  class="note-input"
+/>
+
       <button type="submit" class="btn btn-wishlist">Add to Wishlist</button>
     </form>
   <% } else { %>
-    <a href="/account/login" class="btn btn-wishlist" onclick="alert('Please log in to add items to your wishlist.')">Add to Wishlist</a>
+    <a href="/account/login" class="btn btn-wishlist" onclick="alert('Please log in to add items to your wishlist.')">
+      Add to Wishlist
+    </a>
   <% } %>
 </div>
-

@@ -3,9 +3,8 @@ const utilities = require("../utilities/");
 
 async function addWishlistItem(req, res, next) {
   try {
-    // Obtenemos el account_id desde res.locals.user (establecido en el middleware global)
     const account_id = res.locals.user ? res.locals.user.account_id : null;
-    const { inventory_id } = req.body;
+    const { inventory_id, note } = req.body;
     if (!account_id || !inventory_id) {
       req.flash("error", "Invalid request data.");
       return res.redirect(req.get("Referrer") || "/");
@@ -20,8 +19,8 @@ async function addWishlistItem(req, res, next) {
       req.flash("error", "Item is already in your wishlist.");
       return res.redirect(req.get("Referrer") || "/");
     }
-    // Agrega el ítem a la wishlist
-    await wishlistModel.addToWishlist(account_id, inventory_id);
+    // Agrega el ítem a la wishlist, incluyendo la nota
+    await wishlistModel.addToWishlist(account_id, inventory_id, note);
     req.flash("success", "Item added to your wishlist successfully.");
     return res.redirect(req.get("Referrer") || "/");
   } catch (error) {
@@ -37,11 +36,9 @@ async function removeWishlistItem(req, res, next) {
       req.flash("error", "Invalid request data.");
       return res.redirect(req.get("Referrer") || "/");
     }
-    
     await wishlistModel.removeFromWishlist(account_id, inventory_id);
     req.flash("success", "Item removed from your wishlist.");
-return res.redirect(req.get("Referrer") || "/");
-
+    return res.redirect(req.get("Referrer") || "/");
   } catch (error) {
     next(error);
   }

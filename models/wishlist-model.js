@@ -1,10 +1,9 @@
-// models/wishlist-model.js
 const pool = require("../database/");
 
-async function addToWishlist(account_id, inventory_id) {
+async function addToWishlist(account_id, inventory_id, note) {
   try {
-    const sql = "INSERT INTO wishlist (account_id, inventory_id) VALUES ($1, $2) RETURNING *";
-    const result = await pool.query(sql, [account_id, inventory_id]);
+    const sql = "INSERT INTO wishlist (account_id, inventory_id, note) VALUES ($1, $2, $3) RETURNING *";
+    const result = await pool.query(sql, [account_id, inventory_id, note]);
     return result.rows[0];
   } catch (error) {
     console.error("addToWishlist error: " + error);
@@ -26,7 +25,8 @@ async function getWishlistItem(account_id, inventory_id) {
 async function getWishlist(account_id) {
   try {
     const sql = `
-      SELECT i.* FROM inventory i
+      SELECT i.*, w.note 
+      FROM inventory i
       JOIN wishlist w ON i.inventory_id = w.inventory_id
       WHERE w.account_id = $1
       ORDER BY w.created_at DESC

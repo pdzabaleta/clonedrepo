@@ -25,11 +25,7 @@ body {
   padding: 10px;
   
 }
-/* a {
-  text-decoration: none;
-  color: blue;
-} */
-/* Contenedor principal del header */
+
 .logo-container {
   display: flex;
   justify-content: space-between;
@@ -85,22 +81,6 @@ body {
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* 
-nav ul {
-  display: flex;
-  justify-content: space-around;
-  list-style: none;
-  background-color: black;
-  margin: 0;
-  height: 40px;
-  align-items: center;
-  padding: 0;
-  
-}
-nav ul li a {
-  text-decoration: none;
-  color: white;
-}
 
 /*********************
   ESTILOS POR DEFECTO (ESCRITORIO)
@@ -122,11 +102,7 @@ nav ul li a {
   top: 20px;
   right: 30px;
   z-index: 1100; /* Asegura que el botón esté por encima */
-  padding: 10px;  /* Aumenta el área clicable */
-  /* También puedes establecer un ancho y alto mínimo si lo deseas:
-  min-width: 50px;
-  min-height: 50px;
-  */
+  padding: 10px; 
 }
 
 
@@ -182,7 +158,7 @@ nav ul li a {
 
 /* Efecto hover: cambia el background de cada enlace al pasar el mouse */
 .nav-links a:hover {
-  background-color: #e0e0e0; /* Puedes ajustar este color según tu diseño */
+  background-color: #e0e0e0; 
 }
 
 /* Panel de navegación (oculto por defecto) */
@@ -192,11 +168,11 @@ nav ul li a {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
   position: absolute;
-  top: 70px;      /* Espacio desde la parte superior */
-  right: 30px;    /* Espacio desde el lado derecho */
-  width: 300px;   /* Panel amplio en escritorio */
+  top: 70px;    
+  right: 30px;   
+  width: 300px; 
   padding: 30px;
-  z-index: 1000;  /* Asegura que el panel se muestre por encima de otros elementos */
+  z-index: 1000;  
 }
 
 .nav-links ul {
@@ -650,29 +626,6 @@ nav ul li a {
   color: #0f5132;
   border-left: 5px solid #198754;
 }
-
-
-/* .error::after,Close button
-.success::after {
-  content: "×";
-  font-size: 1.4rem;
-  font-weight: bold;
-  cursor: pointer;
-  margin-left: 15px;
-  color: inherit;
-  transition: opacity 0.3s ease;
-}
-
-.error:hover::after,
-.success:hover::after {
-  opacity: 0.6;
-}
-
-Hide message when clicking close
-.error:has(::after:hover),
-.success:has(::after:hover) {
-  display: none;
-} */
 
 /* ================================
    Add New Vehicle Page Styles
@@ -1162,6 +1115,31 @@ noscript {
   display: block;
 }
 
+/* Estilo para el label de la nota */
+.note-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Estilo para el input de la nota */
+.note-input {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.note-input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  outline: none;
+}
+
 /* Contenedor de detalles (texto) */
 .wishlist-details {
   padding: 15px;
@@ -1220,23 +1198,7 @@ noscript {
 }
 
 
-/* .alert {
-  margin-top: 20px;
-  padding: 10px;
-  text-align: center;
-  font-size: 1.1rem;
-  border-radius: 4px;
-}
 
-.alert-danger {
-  background-color: #f8d7da;
-  color: #721c24;
-}
-
-.alert-success {
-  background-color: #d4edda;
-  color: #155724;
-} */
 
 /* Responsive design for mobile devices */
 @media (max-width: 768px) {
