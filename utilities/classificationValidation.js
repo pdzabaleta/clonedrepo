@@ -1,6 +1,6 @@
-const { body, validationResult } = require("express-validator");
-const invModel = require("../models/inventory-model");
-const utilities = require(".")
+const { body, validationResult } = require('express-validator');
+const invModel = require('../models/inventory-model');
+const utilities = require('.');
 
 const validate = {};
 
@@ -9,10 +9,14 @@ const validate = {};
  ************************************** */
 validate.classificationRules = () => {
   return [
-    body("classification_name")
+    body('classification_name')
       .trim()
-      .notEmpty().withMessage("Please provide a classification name.")
-      .matches(/^[a-zA-Z0-9]+$/).withMessage("The classification name can only contain alphanumeric characters (no spaces or special characters).")
+      .notEmpty()
+      .withMessage('Please provide a classification name.')
+      .matches(/^[a-zA-Z0-9]+$/)
+      .withMessage(
+        'The classification name can only contain alphanumeric characters (no spaces or special characters).',
+      ),
   ];
 };
 
@@ -22,8 +26,10 @@ validate.classificationRules = () => {
 validate.checkClassificationData = async (req, res, next) => {
   // Obtener y transformar el valor ingresado
   let { classification_name } = req.body;
-  classification_name = classification_name.charAt(0).toUpperCase() + classification_name.slice(1).toLowerCase();
-  
+  classification_name =
+    classification_name.charAt(0).toUpperCase() +
+    classification_name.slice(1).toLowerCase();
+
   // Reemplazar el valor original para que la vista también lo reciba formateado
   req.body.classification_name = classification_name;
 
@@ -31,12 +37,16 @@ validate.checkClassificationData = async (req, res, next) => {
   let errors = validationResult(req);
 
   // Verifica si la clasificación ya existe (ahora con el valor normalizado)
-  const classificationExists = await invModel.checkExistingClassification(classification_name);
+  const classificationExists =
+    await invModel.checkExistingClassification(classification_name);
   if (classificationExists) {
-    req.flash('error', 'This classification already exists. Please choose a different name.');
+    req.flash(
+      'error',
+      'This classification already exists. Please choose a different name.',
+    );
     let nav = await utilities.getNav(req, res);
-    return res.render("inventory/add-classification", {
-      title: "Add New Classification",
+    return res.render('inventory/add-classification', {
+      title: 'Add New Classification',
       nav,
       classification_name, // Se pasa el valor formateado
     });
@@ -46,9 +56,9 @@ validate.checkClassificationData = async (req, res, next) => {
   if (!errors.isEmpty()) {
     req.flash('error', 'Please fix the errors above.');
     let nav = await utilities.getNav(req, res);
-    return res.render("inventory/add-classification", {
+    return res.render('inventory/add-classification', {
       errors,
-      title: "Add New Classification",
+      title: 'Add New Classification',
       nav,
       classification_name,
     });

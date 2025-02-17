@@ -1,42 +1,43 @@
-const pool = require("../database/");
-
+const pool = require('../database/');
 
 /* *****************************
-*   Register new account
-* *************************** */
-async function registerAccount(first_name, last_name, email, password){
-    try {
-      const sql = "INSERT INTO account (first_name, last_name, email, password, account_type) VALUES ($1, $2, $3, $4, 'Client') RETURNING *"
-      return await pool.query(sql, [first_name, last_name, email, password])
-    } catch (error) {
-      return error.message
-    }
-  }  
+ *   Register new account
+ * *************************** */
+async function registerAccount(first_name, last_name, email, password) {
+  try {
+    const sql =
+      "INSERT INTO account (first_name, last_name, email, password, account_type) VALUES ($1, $2, $3, $4, 'Client') RETURNING *";
+    return await pool.query(sql, [first_name, last_name, email, password]);
+  } catch (error) {
+    return error.message;
+  }
+}
 
-  /* **********************
+/* **********************
  *   Check for existing email
  * ********************* */
-async function checkExistingEmail(account_email){
+async function checkExistingEmail(account_email) {
   try {
-    const sql = "SELECT * FROM account WHERE email = $1"
-    const email = await pool.query(sql, [account_email])
-    return email.rowCount
+    const sql = 'SELECT * FROM account WHERE email = $1';
+    const email = await pool.query(sql, [account_email]);
+    return email.rowCount;
   } catch (error) {
-    return error.message
+    return error.message;
   }
 }
 
 /* *****************************
-* Return account data using email address
-* ***************************** */
-async function getAccountByEmail (account_email) {
+ * Return account data using email address
+ * ***************************** */
+async function getAccountByEmail(account_email) {
   try {
     const result = await pool.query(
       'SELECT account_id, first_name, last_name, email, account_type, password FROM account WHERE email = $1',
-      [account_email])
-    return result.rows[0]
+      [account_email],
+    );
+    return result.rows[0];
   } catch (error) {
-    return new Error("No matching email found")
+    return new Error('No matching email found');
   }
 }
 
@@ -47,7 +48,7 @@ async function getAccountById(account_id) {
     const result = await pool.query(sql, [account_id]);
     return result.rows[0];
   } catch (error) {
-    console.error("getAccountById error: " + error);
+    console.error('getAccountById error: ' + error);
     throw error;
   }
 }
@@ -55,7 +56,12 @@ async function getAccountById(account_id) {
 /* *****************************
  *  Update account information (first name, last name, email)
  ***************************** */
-async function updateAccount(account_id, account_firstname, account_lastname, account_email) {
+async function updateAccount(
+  account_id,
+  account_firstname,
+  account_lastname,
+  account_email,
+) {
   try {
     const sql = `
       UPDATE account
@@ -65,10 +71,15 @@ async function updateAccount(account_id, account_firstname, account_lastname, ac
       WHERE account_id = $4
       RETURNING *;
     `;
-    const result = await pool.query(sql, [account_firstname, account_lastname, account_email, account_id]);
+    const result = await pool.query(sql, [
+      account_firstname,
+      account_lastname,
+      account_email,
+      account_id,
+    ]);
     return result;
   } catch (error) {
-    console.error("updateAccount error: " + error);
+    console.error('updateAccount error: ' + error);
     throw error;
   }
 }
@@ -87,8 +98,15 @@ async function updatePassword(account_id, hashedPassword) {
     const result = await pool.query(sql, [hashedPassword, account_id]);
     return result;
   } catch (error) {
-    console.error("updatePassword error: " + error);
+    console.error('updatePassword error: ' + error);
     throw error;
   }
 }
-  module.exports = {registerAccount, checkExistingEmail, getAccountByEmail, getAccountById, updateAccount, updatePassword};
+module.exports = {
+  registerAccount,
+  checkExistingEmail,
+  getAccountByEmail,
+  getAccountById,
+  updateAccount,
+  updatePassword,
+};

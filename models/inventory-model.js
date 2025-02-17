@@ -1,10 +1,12 @@
-const pool = require("../database/");
+const pool = require('../database/');
 
 /* ***************************
  *  Get all classification data
  * *************************** */
 async function getClassifications() {
-  return await pool.query("SELECT * FROM public.classification ORDER BY classification_name");
+  return await pool.query(
+    'SELECT * FROM public.classification ORDER BY classification_name',
+  );
 }
 
 /* ***************************************
@@ -13,11 +15,11 @@ async function getClassifications() {
 async function addClassification(classification_name) {
   try {
     await pool.query(
-      "INSERT INTO public.classification (classification_name) VALUES ($1)",
-      [classification_name]
+      'INSERT INTO public.classification (classification_name) VALUES ($1)',
+      [classification_name],
     );
   } catch (error) {
-    console.error("Error adding classification:", error);
+    console.error('Error adding classification:', error);
     throw error;
   }
 }
@@ -28,12 +30,12 @@ async function addClassification(classification_name) {
 async function checkExistingClassification(classification_name) {
   try {
     const result = await pool.query(
-      "SELECT * FROM public.classification WHERE classification_name = $1",
-      [classification_name]
+      'SELECT * FROM public.classification WHERE classification_name = $1',
+      [classification_name],
     );
     return result.rows.length > 0;
   } catch (error) {
-    console.error("Error checking if classification exists:", error);
+    console.error('Error checking if classification exists:', error);
     throw error;
   }
 }
@@ -48,12 +50,12 @@ async function getInventoryByClassificationId(classification_id) {
        JOIN public.classification AS c 
        ON i.classification_id = c.classification_id 
        WHERE i.classification_id = $1`,
-      [classification_id]
+      [classification_id],
     );
     // console.log("Data retrieved from DB:", data.rows);
     return data.rows;
   } catch (error) {
-    console.error("getInventoryByClassificationId error: " + error);
+    console.error('getInventoryByClassificationId error: ' + error);
   }
 }
 
@@ -64,7 +66,7 @@ async function getVehicleById(inventoryId) {
   try {
     const res = await pool.query(
       'SELECT * FROM public.inventory WHERE inventory_id = $1',
-      [inventoryId]
+      [inventoryId],
     );
     if (res.rows.length === 0) {
       return null;
@@ -74,7 +76,6 @@ async function getVehicleById(inventoryId) {
     throw error;
   }
 }
-
 
 /* ***************************************
  * Add a new vehicle to the inventory table
@@ -97,12 +98,12 @@ async function addVehicle(vehicle) {
       vehicle.classification_id,
       vehicle.inv_year,
       vehicle.inv_price,
-      vehicle.inv_mileage
+      vehicle.inv_mileage,
     ];
     const result = await pool.query(sql, params);
     return result.rows[0].inventory_id; // Retorna el ID insertado
   } catch (error) {
-    console.error("Error adding vehicle:", error);
+    console.error('Error adding vehicle:', error);
     throw error;
   }
 }
@@ -136,12 +137,12 @@ async function updateInventory(vehicle) {
       vehicle.inv_year,
       vehicle.inv_price,
       vehicle.inv_mileage,
-      vehicle.inventory_id // ID va al final porque es parte del WHERE
+      vehicle.inventory_id, // ID va al final porque es parte del WHERE
     ];
     const result = await pool.query(sql, params);
     return result.rows[0]; // Retorna el vehículo actualizado
   } catch (error) {
-    console.error("Error updating vehicle:", error);
+    console.error('Error updating vehicle:', error);
     throw error;
   }
 }
@@ -155,11 +156,10 @@ async function deleteInventoryItem(inventory_id) {
     const data = await pool.query(sql, [inventory_id]);
     return data; // Se espera que data.rowCount indique si se eliminó el registro
   } catch (error) {
-    console.error("Delete Inventory Error:", error);
+    console.error('Delete Inventory Error:', error);
     throw error;
   }
 }
-
 
 module.exports = {
   getClassifications,
@@ -169,5 +169,5 @@ module.exports = {
   getVehicleById,
   addVehicle,
   updateInventory,
-  deleteInventoryItem
+  deleteInventoryItem,
 };

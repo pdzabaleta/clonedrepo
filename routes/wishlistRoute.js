@@ -1,29 +1,29 @@
 // routes/wishlistRoute.js
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const wishlistController = require("../controllers/wishlistController");
-const utilities = require("../utilities/");
-const wishlistValidation = require("../utilities/wishlist-validation");
+const wishlistController = require('../controllers/wishlistController');
+const utilities = require('../utilities/');
+const wishlistValidation = require('../utilities/wishlist-validation');
 
 // Rutas de wishlist
 router.post(
-  "/add",
+  '/add',
   utilities.checkLogin, // Asegúrate de que el usuario esté logueado (definido en utilities)
   wishlistValidation.wishlistRules(),
   wishlistValidation.checkWishlistData,
-  utilities.handleErrors(wishlistController.addWishlistItem)
+  utilities.handleErrors(wishlistController.addWishlistItem),
 );
 
 router.post(
-  "/remove",
+  '/remove',
   utilities.checkLogin,
-  utilities.handleErrors(wishlistController.removeWishlistItem)
+  utilities.handleErrors(wishlistController.removeWishlistItem),
 );
 
 router.get(
-  "/",
+  '/',
   utilities.checkLogin,
-  utilities.handleErrors(wishlistController.displayWishlist)
+  utilities.handleErrors(wishlistController.displayWishlist),
 );
 
 module.exports = router;
